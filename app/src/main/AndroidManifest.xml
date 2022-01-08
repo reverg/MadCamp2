@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MadCamp2">
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="0np9miox69" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -20,4 +23,6 @@
         </activity>
     </application>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 </manifest>
