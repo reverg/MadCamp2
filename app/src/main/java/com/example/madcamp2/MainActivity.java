@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.example.madcamp2.community.FragmentCommunity;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentMap fragmentMap;
     FragmentCommunity fragmentCommunity;
     boolean isPermissionGiven = false;
+    private long backKeyPressedTime = 0;
 
     private static final int PERMISSION_REQUEST_CODE = 200;
 
