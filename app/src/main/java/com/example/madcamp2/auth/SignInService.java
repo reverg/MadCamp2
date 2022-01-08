@@ -6,6 +6,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface SignInService {
@@ -17,4 +19,7 @@ public interface SignInService {
     @POST("/signup")
     Call<ResponseBody> signupFunc(@Field("username") String username, @Field("password") String password,
                                   @Field("displayName") String displayName);
+
+    @GET("/authenticate")
+    Call<Boolean> authFunc(@Header("access_token") String token);
 }

@@ -1,13 +1,18 @@
 package com.example.madcamp2;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.example.madcamp2.auth.SignInActivity;
+import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.FragmentCommunity;
 import com.google.android.material.tabs.TabLayout;
 
@@ -76,6 +81,22 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // delete token
+        TokenManager.setToken(getApplicationContext(), TokenManager.TOKEN_KEY, "");
+        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        return true;
     }
 
     // function to check permission

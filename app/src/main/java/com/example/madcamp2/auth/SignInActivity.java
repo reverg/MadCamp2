@@ -68,7 +68,6 @@ public class SignInActivity extends Activity {
     }
 
     public void signIn() {
-
         Call<SignInResult> callSignIn = RetrofitClient.getSignInService()
                 .signinFunc(signInUsername.getText().toString(), signInPassword.getText().toString());
         callSignIn.enqueue(new Callback<SignInResult>() {
@@ -81,7 +80,7 @@ public class SignInActivity extends Activity {
                         TokenManager.setToken(getApplicationContext(), TokenManager.TOKEN_KEY, accessToken);
 
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()),
@@ -96,5 +95,31 @@ public class SignInActivity extends Activity {
             }
         });
 
+    }
+
+    public void authenticate(String token) {
+        Call<Boolean> callSignIn = RetrofitClient.getSignInService()
+                .authFunc(token);
+        callSignIn.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()) {
+                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("SignInActivity", t.getMessage());
+                Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

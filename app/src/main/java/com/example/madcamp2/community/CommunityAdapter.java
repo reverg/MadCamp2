@@ -19,6 +19,7 @@ import com.example.madcamp2.R;
 import com.example.madcamp2.RetrofitClient;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.DTO.Group;
+import com.example.madcamp2.community.DTO.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,8 +64,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
             @Override
             public void onClick(View v){
                 FragmentManager fragmentManager = ((AppCompatActivity)mContext).getSupportFragmentManager();
-                int groupId = groupList.get(viewHolder.getAdapterPosition()).getGroupId();
-                FragmentGroupInfo groupInfo = new FragmentGroupInfo(groupId);
+                List<User> userList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
+                FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList);
                 fragmentManager.beginTransaction().add(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }
         });

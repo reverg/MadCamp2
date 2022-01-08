@@ -14,6 +14,13 @@ public class User {
     @SerializedName("joinedAt")
     private String userJoinedDate;
 
+    private int userDistance;
+
+    public User(String userName, int userDistance) {
+        this.userName = userName;
+        this.userDistance = userDistance;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -52,5 +59,9 @@ public class User {
 
     public void setUserJoinedDate(String userJoinedDate) {
         this.userJoinedDate = userJoinedDate;
+    }
+
+    public int getUserDistance() {
+        return userDistance;
     }
 }

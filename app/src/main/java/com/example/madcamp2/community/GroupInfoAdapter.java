@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madcamp2.R;
+import com.example.madcamp2.community.DTO.User;
 
 import java.util.List;
 
