@@ -1,4 +1,4 @@
-package com.example.madcamp2.signin;
+package com.example.madcamp2.auth;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,10 +7,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.madcamp2.MainActivity;
 import com.example.madcamp2.R;
 import com.example.madcamp2.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;
@@ -57,7 +55,7 @@ public class SignUpActivity extends Activity {
 
     public void signUp() {
 
-        Call<ResponseBody> callSignUp = RetrofitClient.getApiService()
+        Call<ResponseBody> callSignUp = RetrofitClient.getSignInService()
                 .signupFunc(signUpUsername.getText().toString(),
                         signUpPassword.getText().toString(), signUpDisplayName.getText().toString());
         callSignUp.enqueue(new Callback<ResponseBody>() {

@@ -1,26 +1,38 @@
 package com.example.madcamp2.community;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madcamp2.R;
+import com.example.madcamp2.RetrofitClient;
+import com.example.madcamp2.auth.TokenManager;
+import com.example.madcamp2.community.DTO.Group;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.GroupViewHolder> {
 
     Context mContext;
-    List<Group> groupList;
+    ArrayList<Group> groupList;
 
-    public CommunityAdapter(Context mContext, List<Group> mData) {
+    public CommunityAdapter(Context mContext, ArrayList<Group> mData) {
         this.mContext = mContext;
         this.groupList = mData;
     }
@@ -29,16 +41,16 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
         private LinearLayout community_group;
         private ImageView group_img;
         private TextView group_name;
-        private TextView group_info;
+        private TextView group_delete;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
             community_group = itemView.findViewById(R.id.community_group_item);
             group_img = itemView.findViewById(R.id.group_img);
             group_name = itemView.findViewById(R.id.group_name);
-            group_info = itemView.findViewById(R.id.group_info);
+            group_delete = itemView.findViewById(R.id.group_delete);
+            };
         }
-    }
     @NonNull
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,6 +62,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
                 // show new fragment for each group
             }
         });
+        viewHolder.group_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = TokenManager.getToken(mContext, TokenManager.TOKEN_KEY);
+                int groupId = groupList.get(viewHolder.getAdapterPosition()).getGroupId();
+                deleteGroup(token, groupId, viewHolder.getAdapterPosition());
+            }
+        });
         return viewHolder;
     }
 
@@ -57,12 +77,40 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         Group groupItem = groupList.get(position);
         holder.group_name.setText(groupItem.getGroupName());
-        holder.group_info.setText(groupItem.getGroupInfo());
         holder.group_img.setImageResource(R.mipmap.ic_launcher_round);
     }
 
     @Override
     public int getItemCount() {
         return groupList.size();
+    }
+
+    public void deleteGroup(String token, int groupId, int pos) {
+        Call<ResponseBody> callCommunity = RetrofitClient.getCommunityService()
+            .deleteGroupFunc(token, groupId);
+        callCommunity.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String result = response.body().string();
+                        Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+                        groupList.remove(pos);
+                        notifyItemRemoved(pos);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(mContext, "error = " + String.valueOf(response.code()),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("CommunityAdapter", t.getMessage());
+                Toast.makeText(mContext, "Response Fail", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

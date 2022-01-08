@@ -24,12 +24,12 @@
         </activity>
 
         <activity
-            android:name=".signin.SignInActivity"
+            android:name=".auth.SignInActivity"
             android:exported="true" >
         </activity>
 
         <activity
-            android:name=".signin.SignUpActivity"
+            android:name=".auth.SignUpActivity"
             android:exported="true"/>
 
         <meta-data

@@ -1,11 +1,11 @@
-package com.example.madcamp2.signin;
-
-import static android.content.ContentValues.TAG;
+package com.example.madcamp2.auth;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.session.MediaSession;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.madcamp2.MainActivity;
 import com.example.madcamp2.R;
 import com.example.madcamp2.RetrofitClient;
+import com.example.madcamp2.auth.DTO.SignInResult;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
@@ -28,8 +29,9 @@ import retrofit2.Response;
 public class SignInActivity extends Activity {
     private Button signInBtn, signUpBtn;
     private TextInputEditText signInUsername, signInPassword;
-
     private TextView signInAlert;
+
+    private String TOKEN_KEY = "JWT TOKEN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +69,20 @@ public class SignInActivity extends Activity {
 
     public void signIn() {
 
-        Call<ResponseBody> callSignIn = RetrofitClient.getApiService()
+        Call<SignInResult> callSignIn = RetrofitClient.getSignInService()
                 .signinFunc(signInUsername.getText().toString(), signInPassword.getText().toString());
-        callSignIn.enqueue(new Callback<ResponseBody>() {
+        callSignIn.enqueue(new Callback<SignInResult>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
                 if (response.isSuccessful()) {
-                    try {
-                        String result = response.body().string();
-                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                        String accessToken = response.body().getAccessToken();
+                        String message = response.body().getMessage();
+
+                        TokenManager.setToken(getApplicationContext(), TokenManager.TOKEN_KEY, accessToken);
 
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                 } else {
                     Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()),
                             Toast.LENGTH_LONG).show();
@@ -90,7 +90,7 @@ public class SignInActivity extends Activity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<SignInResult> call, Throwable t) {
                 Log.d("SignInActivity", t.getMessage());
                 Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_LONG).show();
             }

@@ -1,6 +1,7 @@
 package com.example.madcamp2;
 
-import com.example.madcamp2.signin.SignInService;
+import com.example.madcamp2.community.CommunityService;
+import com.example.madcamp2.auth.SignInService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,8 +32,13 @@ public class RetrofitClient {
 
     }
 
-    public static SignInService getApiService() {
+    public static SignInService getSignInService() {
         SignInService service = getRetrofit().create(SignInService.class);
+        return service;
+    }
+
+    public static CommunityService getCommunityService() {
+        CommunityService service = getRetrofit().create(CommunityService.class);
         return service;
     }
 }
