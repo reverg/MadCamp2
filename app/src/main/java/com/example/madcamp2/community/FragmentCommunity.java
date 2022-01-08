@@ -1,4 +1,4 @@
-package com.example.madcamp2;
+package com.example.madcamp2.community;
 
 
 import android.os.Bundle;
@@ -10,10 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.madcamp2.R;
+
 public class FragmentCommunity extends Fragment {
 
     View v;
-
 
     public FragmentCommunity() {
     }
