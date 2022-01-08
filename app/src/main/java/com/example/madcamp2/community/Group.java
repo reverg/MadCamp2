@@ -10,7 +10,7 @@ public class Group {
     private List<User> memberList;
     private String createdDate;
 
-    public Group(int groupId, String groupName, String groupInfo, List<User> memberList){
+    public Group(int groupId, String groupName, String groupInfo, List<User> memberList) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupInfo = groupInfo;
@@ -24,27 +24,31 @@ public class Group {
         }
     }
 
-    public String getGroupName(){
+    public String getGroupName() {
         return groupName;
     }
 
-    public String getGroupInfo(){
+    public String getGroupInfo() {
         return groupInfo;
     }
 
-    public List<User> getMemberList(){
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public List<User> getMemberList() {
         return memberList;
     }
 
-    public void setGroupName(String groupName){
+    public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
-    public void setGroupInfo(String groupInfo){
+    public void setGroupInfo(String groupInfo) {
         this.groupName = groupInfo;
     }
 
-    public void setMemberList(List<User> memberList){
+    public void setMemberList(List<User> memberList) {
         this.memberList = memberList;
     }
 }

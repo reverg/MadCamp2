@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madcamp2.R;
@@ -44,10 +46,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.community_item, parent, false);
         GroupViewHolder viewHolder = new GroupViewHolder(view);
+
         viewHolder.community_group.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                // show new fragment for each group
+                FragmentManager fragmentManager = ((AppCompatActivity)mContext).getSupportFragmentManager();
+                int groupId = groupList.get(viewHolder.getAdapterPosition()).getGroupId();
+                FragmentGroupInfo groupInfo = new FragmentGroupInfo(groupId);
+                fragmentManager.beginTransaction().add(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }
         });
         return viewHolder;
