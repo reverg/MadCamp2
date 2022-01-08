@@ -10,9 +10,11 @@ import retrofit2.http.Query;
 public interface SignInService {
     @FormUrlEncoded
     @POST("/signin")
-    Call<ResponseBody> getFunc(@Field("data") String data);
+    Call<ResponseBody> signinFunc(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
     @POST("/signup")
-    Call<ResponseBody> postFunc(@Field("username") String username, @Field("password") String password);
+    Call<ResponseBody> signupFunc(@Field("username") String username,
+                                  @Field("password") String password,
+                                  @Field("displayName") String displayName);
 }

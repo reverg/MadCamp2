@@ -59,6 +59,8 @@ public class SignInActivity extends Activity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -66,7 +68,7 @@ public class SignInActivity extends Activity {
     public void signIn() {
 
         Call<ResponseBody> callSignIn = RetrofitClient.getApiService()
-                .postFunc(signInUsername.getText().toString(), signInPassword.getText().toString());
+                .signinFunc(signInUsername.getText().toString(), signInPassword.getText().toString());
         callSignIn.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
