@@ -49,6 +49,8 @@ public class FragmentCommunity extends Fragment {
 
     TextInputEditText makeGroupName;
     TextView makeGroupSave, makeGroupCancel;
+    TextInputEditText joinGroupName, joinGroupCode;
+    TextView joinGroupSave, joinGroupCancel;
 
     public FragmentCommunity() {
     }
@@ -61,7 +63,7 @@ public class FragmentCommunity extends Fragment {
 
         fab_main = v.findViewById(R.id.fab_main);
         fab_make_group = v.findViewById(R.id.fab_make_group);
-        fab_join_group = v. findViewById(R.id.fab_join_group);
+        fab_join_group = v.findViewById(R.id.fab_join_group);
         fab_make_group_text = v.findViewById(R.id.fab_make_group_text);
         fab_join_group_text = v.findViewById(R.id.fab_join_group_text);
 
@@ -70,10 +72,10 @@ public class FragmentCommunity extends Fragment {
         fab_make_group_text.setVisibility(View.GONE);
         fab_join_group_text.setVisibility(View.GONE);
 
-        fab_main.setOnClickListener(new View.OnClickListener(){
+        fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                if(!fabVisible){
+            public void onClick(View v) {
+                if (!fabVisible) {
                     fab_make_group.show();
                     fab_join_group.show();
                     fab_make_group_text.setVisibility(View.VISIBLE);
@@ -133,11 +135,46 @@ public class FragmentCommunity extends Fragment {
         fab_join_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                View alertView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_group, null, false);
+                builder.setView(alertView);
+
                 fab_make_group.hide();
                 fab_join_group.hide();
                 fab_make_group_text.setVisibility(View.GONE);
                 fab_join_group_text.setVisibility(View.GONE);
                 fabVisible = false;
+
+                final AlertDialog dialog = builder.create();
+
+                joinGroupName = (TextInputEditText) alertView.findViewById(R.id.join_group_name);
+                joinGroupCode = (TextInputEditText) alertView.findViewById(R.id.join_group_code);
+                joinGroupSave = (TextView) alertView.findViewById(R.id.join_group_save);
+                joinGroupCancel = (TextView) alertView.findViewById(R.id.join_group_cancel);
+
+                joinGroupSave.setOnClickListener(view -> {
+                    // 저장버튼 클릭
+                    if (TextUtils.isEmpty(joinGroupName.getText().toString())) {
+                        Toast.makeText(getActivity(), "Username / Password Required",
+                                Toast.LENGTH_LONG).show();
+                    } else if (TextUtils.isEmpty(joinGroupCode.getText().toString())) {
+                        Toast.makeText(getActivity(), "Group Code Required",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
+                        joinGroup(token, communityAdapter.getItemCount());
+                    }
+                    dialog.dismiss();
+                });
+
+
+
+                joinGroupCancel.setOnClickListener(view -> {
+                    // 취소버튼 클릭
+                    dialog.dismiss();
+                });
+
+                dialog.show();
             }
         });
 
@@ -170,6 +207,7 @@ public class FragmentCommunity extends Fragment {
                             Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ArrayList<Group>> call, Throwable t) {
                 Log.d("FragmentCommunity", t.getMessage());
@@ -199,6 +237,31 @@ public class FragmentCommunity extends Fragment {
             @Override
             public void onFailure(Call<Group> call, Throwable t) {
                 Log.d("MakeGroupDialog", t.getMessage());
+                Toast.makeText(getActivity(), "Response Fail", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void joinGroup(String token, int pos) {
+        // 수정 많이 필요
+        Call<Group> callCommunity = RetrofitClient.getCommunityService()
+                .insertGroupFunc(token, makeGroupName.getText().toString());
+        callCommunity.enqueue(new Callback<Group>() {
+            @Override
+            public void onResponse(Call<Group> call, Response<Group> response) {
+                if (response.isSuccessful()) {
+                    Group result = response.body();
+                    groupList.add(result);
+                    communityAdapter.notifyItemInserted(pos);
+                } else {
+                    Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Group> call, Throwable t) {
+                Log.d("JoinGroupDialog", t.getMessage());
                 Toast.makeText(getActivity(), "Response Fail", Toast.LENGTH_LONG).show();
             }
         });

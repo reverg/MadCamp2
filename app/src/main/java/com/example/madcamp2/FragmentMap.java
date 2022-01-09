@@ -1,6 +1,5 @@
 package com.example.madcamp2;
 
-
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -9,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 
 import com.naver.maps.geometry.LatLng;
 
@@ -28,7 +25,6 @@ import com.naver.maps.map.MapFragment;
 import java.util.ArrayList;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
-
     View v;
     Button startButton;
     Button infoButton;
@@ -48,7 +44,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
 
     private double latitude = 0;
     private double longitude = 0;
-
 
     private FusedLocationSource fusedLocationSource;
     private PathOverlay path;

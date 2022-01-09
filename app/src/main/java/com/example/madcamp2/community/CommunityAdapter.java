@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.GroupViewHolder> {
+public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder> {
 
     Context mContext;
     ArrayList<Group> groupList;
@@ -40,13 +40,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
         this.groupList = mData;
     }
 
-    public static class GroupViewHolder extends RecyclerView.ViewHolder {
+    public static class CommunityViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout community_group;
         private ImageView group_img;
         private TextView group_name;
-        private TextView group_delete;
+        private ImageView group_delete;
 
-        public GroupViewHolder(@NonNull View itemView) {
+        public CommunityViewHolder(@NonNull View itemView) {
             super(itemView);
             community_group = itemView.findViewById(R.id.community_group_item);
             group_img = itemView.findViewById(R.id.group_img);
@@ -56,9 +56,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
         }
     @NonNull
     @Override
-    public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CommunityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.community_item, parent, false);
-        GroupViewHolder viewHolder = new GroupViewHolder(view);
+        CommunityViewHolder viewHolder = new CommunityViewHolder(view);
 
         viewHolder.community_group.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -81,7 +81,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Grou
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CommunityViewHolder holder, int position) {
         Group groupItem = groupList.get(position);
         holder.group_name.setText(groupItem.getGroupName());
         holder.group_img.setImageResource(R.mipmap.ic_launcher_round);
