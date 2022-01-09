@@ -44,7 +44,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
         private LinearLayout community_group;
         private ImageView group_img;
         private TextView group_name;
-        private TextView group_delete;
+        private ImageView group_delete;
 
         public CommunityViewHolder(@NonNull View itemView) {
             super(itemView);

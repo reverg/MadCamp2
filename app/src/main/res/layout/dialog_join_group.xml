@@ -37,14 +37,14 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/join_group_id"
+            android:id="@+id/join_group_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="170dp"
             android:layout_marginEnd="30dp"
             android:background="@color/white"
-            android:hint="Group ID"
+            android:hint="Group Code"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +59,7 @@
         android:weightSum="3">
 
         <TextView
-            android:id="@+id/make_group_cancel"
+            android:id="@+id/join_group_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -70,7 +70,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/make_group_save"
+            android:id="@+id/join_group_save"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
