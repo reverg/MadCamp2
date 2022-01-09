@@ -9,6 +9,8 @@
         android:text = "Sign Up"
         android:layout_marginTop="100dp"
         android:textSize = "24sp"
+        android:textStyle="bold"
+        android:textColor ="@color/light_purple"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"/>
 
@@ -81,7 +83,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/light_purple"
         android:layout_height="wrap_content"
         android:text="Continue" />
 </LinearLayout>
