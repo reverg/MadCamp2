@@ -92,19 +92,28 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 if (!isRunning) {
                     //infoButton.setVisibility(View.VISIBLE);
                     // startButton.setText("Stop");
-                    startButton.setEnabled(false);
-                    stopButton.setEnabled(true);
+                    //stopButton.setEnabled(true);
                     isRunning = true;
-                } else {
+                }
+                //else {
                     //infoButton.setVisibility(View.GONE);
                     // startButton.setText("Start");
+                //    isRunning = false;
+                //    pathMarkers = new ArrayList<>();
+                    //infoButton.setText("Distance: 0m\nSpeed: 0km/h");
+
+                //}
+            }
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isRunning) {
                     isRunning = false;
                     pathMarkers = new ArrayList<>();
                     distanceInfo.setText("Distance: 0m");
                     speedInfo.setText("Speed: 0km/h");
-                    stopButton.setEnabled(false);
-                    startButton.setEnabled(true);
-                    //infoButton.setText("Distance: 0m\nSpeed: 0km/h");
                     totalDistance = 0;
                 }
             }

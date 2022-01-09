@@ -12,26 +12,41 @@
     app:cardCornerRadius="7dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/group_name"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:text="shr_product_title"
-            android:textAppearance="?attr/textAppearanceHeadline6" />
+            android:layout_height="0dp"
+            android:layout_weight="3.5"
+            android:scaleType="fitXY"
+            android:src="@drawable/background" />
 
-        <TextView
-            android:id="@+id/group_info"
+        <LinearLayout
+            android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:text="shr_product_description"
-            android:textAppearance="?attr/textAppearanceBody2" />
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="shr_product_title"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/group_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="shr_product_description"
+                android:textAppearance="?attr/textAppearanceBody2" />
+        </LinearLayout>
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>

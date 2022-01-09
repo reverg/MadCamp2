@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(mapTab);
         tabLayout.addTab(communityTab);
 
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#896bff"));
-        tabLayout.setTabTextColors(Color.parseColor("#bdbdbd"), Color.parseColor("#896bff"));
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#abc4ff"));
+        tabLayout.setTabTextColors(Color.parseColor("#bdbdbd"), Color.parseColor("#abc4ff"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

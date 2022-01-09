@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_map"
@@ -11,84 +12,99 @@
 
 
     <fragment
-        android:layout_weight="3"
         android:id="@+id/map"
         android:name="com.naver.maps.map.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:background="@drawable/border">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:id="@+id/location_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="88dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_baseline_location_on_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/distance_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/start_button"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:text="Distance: 0m&#10;"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toRightOf="@+id/location_icon"
-                app:layout_constraintStart_toEndOf="@+id/location_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/ic_baseline_directions_run_24"
+            app:layout_constraintBottom_toBottomOf="@+id/distance_info"
+            app:layout_constraintEnd_toStartOf="@+id/distance_info" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="96dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_baseline_speed_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_icon" />
+        <TextView
+            android:id="@+id/distance_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Distance: 0m&#10;"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/speed_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
-                android:text="Speed: 0km/h"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/distance_info" />
+        <TextView
+            android:id="@+id/speed_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="12dp"
+            android:text="Speed: 0km/h"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/distance_info" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_baseline_flight_24"
+            app:layout_constraintEnd_toStartOf="@+id/speed_info"
+            app:layout_constraintTop_toBottomOf="@+id/distance_info" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/speed_info">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/start_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="102dp"
-                android:layout_marginBottom="16dp"
-                android:text="Start"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_centerInParent="false"
+                android:text="Start" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/stop_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#fc3a4e"
-                android:text="Stop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/start_button" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginLeft="20dp"
+                android:backgroundTint="#eac9c1"
+                android:text="Stop" />
+        </LinearLayout>
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

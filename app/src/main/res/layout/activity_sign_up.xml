@@ -7,10 +7,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:text = "Sign Up"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:textSize = "24sp"
         android:textStyle="bold"
-        android:textColor ="@color/light_purple"
+        android:textColor ="@color/dark_blue"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"/>
 
@@ -83,7 +83,14 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/light_purple"
+        android:backgroundTint="@color/pastel_blue"
         android:layout_height="wrap_content"
         android:text="Continue" />
+
+    <ImageView
+        android:layout_gravity="bottom|end"
+        android:layout_marginLeft="-25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="260dp"
+        android:background="@drawable/signin" />
 </LinearLayout>
