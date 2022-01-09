@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import com.example.madcamp2.RetrofitClient;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.DTO.Group;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -166,8 +168,6 @@ public class FragmentCommunity extends Fragment {
                     }
                     dialog.dismiss();
                 });
-
-
 
                 joinGroupCancel.setOnClickListener(view -> {
                     // 취소버튼 클릭

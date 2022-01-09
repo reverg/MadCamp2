@@ -47,7 +47,7 @@
         android:id="@+id/sign_in_alert"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content" />
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_button"
         android:layout_width="match_parent"
         android:layout_marginTop="30dp"
@@ -58,7 +58,7 @@
         android:backgroundTint="@color/light_purple"
         android:layout_height="wrap_content"
         android:text="Sign In" />
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_button"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"

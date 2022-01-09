@@ -7,16 +7,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 
 import com.example.madcamp2.auth.SignInActivity;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.FragmentCommunity;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,17 +39,12 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     FragmentMap fragmentMap;
     FragmentCommunity fragmentCommunity;
-    boolean isPermissionGiven = false;
-    private long backKeyPressedTime = 0;
-
-    private static final int PERMISSION_REQUEST_CODE = 200;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        checkAndRequestPermissions();
 
         tabLayout = findViewById(R.id.tabs);
 
@@ -76,81 +78,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        if (isPermissionGiven) {
-
-        }
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_actions, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // delete token
-        TokenManager.setToken(getApplicationContext(), TokenManager.TOKEN_KEY, "");
-        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        return true;
-    }
-
-    // function to check permission
-    private void checkAndRequestPermissions() {
-        int fineLocationPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        int coarseLocationPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
-
-        List<String> listPermissionsNeeded = new ArrayList<>();
-
-        if (fineLocationPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
-            isPermissionGiven = false;
-        }
-        if (coarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-            isPermissionGiven = false;
-        }
-
-        for (int i=0; i < listPermissionsNeeded.size(); i++) {
-            Log.d("Permission Check", String.valueOf(listPermissionsNeeded.get(i)));
-        }
-
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
-                    PERMISSION_REQUEST_CODE);
-        } else {
-            isPermissionGiven = true;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                boolean isPermissionAllGranted = false;
-
-                if (grantResults.length > 0 && permissions.length == grantResults.length) {
-                    for (int i = 0; i < permissions.length; i++) {
-                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                            isPermissionAllGranted = true;
-                        } else {
-                            isPermissionAllGranted = false;
-                        }
-                    }
-                } else {
-                    isPermissionAllGranted = true;
-                }
-
-                if (isPermissionAllGranted) {
-
-                }
-                break;
-        }
     }
 }
