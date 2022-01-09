@@ -19,7 +19,7 @@ public class Group {
     private String createdAt;
 
     public Group(int groupId, String groupName, User groupOwner,
-                 ArrayList<User> memberList, String createdAt){
+                 ArrayList<User> memberList, String createdAt) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupOwner = groupOwner;
@@ -27,23 +27,23 @@ public class Group {
         this.createdAt = createdAt;
     }
 
-    public String getGroupName(){
+    public String getGroupName() {
         return groupName;
     }
 
-    public ArrayList<User> getMemberList(){
+    public ArrayList<User> getMemberList() {
         return memberList;
     }
 
-    public void setGroupName(String groupName){
+    public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
-    public void setGroupInfo(String groupInfo){
+    public void setGroupInfo(String groupInfo) {
         this.groupName = groupInfo;
     }
 
-    public void setMemberList(ArrayList<User> memberList){
+    public void setMemberList(ArrayList<User> memberList) {
         this.memberList = memberList;
     }
 

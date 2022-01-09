@@ -1,6 +1,5 @@
 package com.example.madcamp2.community;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
