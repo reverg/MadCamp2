@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/drawable/account_circle_24.xml" value="0.1" />
+        <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/drawable/baseline_directions_run_indigo_400_24dp.xml" value="0.1" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/drawable/border.xml" value="0.1" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/drawable/clear.xml" value="0.1953125" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1953125" />
@@ -15,7 +16,8 @@
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/activity_sign_in.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/community_item.xml" value="0.22" />
-        <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/dialog_make_group.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/dialog_join_group.xml" value="0.22" />
+        <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/dialog_make_group.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/fragment_community.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/fragment_group_info.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/Public/Documents/MadCamp2/app/src/main/res/layout/fragment_main.xml" value="0.17300724637681159" />

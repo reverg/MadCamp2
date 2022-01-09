@@ -3,6 +3,7 @@ package com.example.madcamp2;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
+    TabLayout.Tab mapTab;
+    TabLayout.Tab communityTab;
     FragmentMap fragmentMap;
     FragmentCommunity fragmentCommunity;
     NavigationView navigationView;
@@ -53,8 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragmentMap).commit();
 
-        tabLayout.addTab(tabLayout.newTab().setText("Map"));
-        tabLayout.addTab(tabLayout.newTab().setText("Community"));
+        mapTab = tabLayout.newTab().setText("Map");
+        communityTab = tabLayout.newTab().setText("Community");
+
+        tabLayout.addTab(mapTab);
+        tabLayout.addTab(communityTab);
+
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#896bff"));
+        tabLayout.setTabTextColors(Color.parseColor("#bdbdbd"), Color.parseColor("#896bff"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
