@@ -2,6 +2,7 @@ package com.example.madcamp2;
 
 import com.example.madcamp2.community.CommunityService;
 import com.example.madcamp2.auth.SignInService;
+import com.example.madcamp2.map.MapService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -9,7 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "http://192.249.18.74:443";
+    private static final String BASE_URL = "http://192.249.18.69:443";
     private static Retrofit retrofit = null;
 
     private RetrofitClient() {
@@ -39,6 +40,11 @@ public class RetrofitClient {
 
     public static CommunityService getCommunityService() {
         CommunityService service = getRetrofit().create(CommunityService.class);
+        return service;
+    }
+
+    public static MapService getMapService() {
+        MapService service = getRetrofit().create(MapService.class);
         return service;
     }
 }

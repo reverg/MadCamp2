@@ -1,6 +1,7 @@
 package com.example.madcamp2.community;
 
 import com.example.madcamp2.community.DTO.Group;
+import com.example.madcamp2.community.DTO.User;
 
 import java.util.ArrayList;
 
@@ -32,4 +33,8 @@ public interface CommunityService {
     @FormUrlEncoded
     @POST("/group/join")
     Call<Group> joinGroupFunc(@Header("access-token") String token, @Field("name") String name, @Field("code") String code);
+
+    @GET("/group/user/{userId}")
+    Call<User> getUser(@Path("userId") int userId);
+
 }

@@ -11,10 +11,10 @@ public class User {
     private String displayName;
     @SerializedName("photoUrl")
     private String userPhotoUrl;
+    @SerializedName("totalDistance")
+    private double userDistance;
     @SerializedName("joinedAt")
     private String userJoinedDate;
-
-    private int userDistance;
 
     public User(String userName, int userDistance) {
         this.userName = userName;
@@ -61,7 +61,7 @@ public class User {
         this.userJoinedDate = userJoinedDate;
     }
 
-    public int getUserDistance() {
+    public double getUserDistance() {
         return userDistance;
     }
 }

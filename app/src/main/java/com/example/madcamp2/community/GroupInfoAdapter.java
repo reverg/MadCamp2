@@ -62,12 +62,13 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
         User userItem = userList.get(position);
 
         holder.user_name.setText(userItem.getDisplayName());
-        holder.user_rank.setText(Integer.toString(position +1));
-        holder.user_distance.setText(Integer.toString(userItem.getUserDistance()));
+        holder.user_rank.setText(Integer.toString(position + 1));
+        holder.user_distance.setText(Double.toString(userItem.getUserDistance()));
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        if (userList == null) return 0;
+        else return userList.size();
     }
 }

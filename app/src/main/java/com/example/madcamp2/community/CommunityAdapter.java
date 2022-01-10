@@ -28,6 +28,7 @@ import com.google.android.material.card.MaterialCardView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -37,7 +38,7 @@ import retrofit2.Response;
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder> {
 
     Context mContext;
-    ArrayList<Group> groupList;
+    ArrayList<Group> groupList = new ArrayList<>();
     ConstraintLayout no_group;
 
     public CommunityAdapter(Context mContext, ArrayList<Group> mData, ConstraintLayout no_group) {
@@ -60,19 +61,28 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
             group_name = itemView.findViewById(R.id.group_name);
             group_info = itemView.findViewById(R.id.group_info);
             // group_delete = itemView.findViewById(R.id.group_delete);
-            };
         }
+
+        ;
+    }
+
     @NonNull
     @Override
     public CommunityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.community_item, parent, false);
         CommunityViewHolder viewHolder = new CommunityViewHolder(view);
 
-        viewHolder.community_group.setOnClickListener(new View.OnClickListener(){
+        viewHolder.community_group.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                FragmentManager fragmentManager = ((AppCompatActivity)mContext).getSupportFragmentManager();
-                List<User> userList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
+            public void onClick(View v) {
+                FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+                List<User> userIdList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
+                List<User> userList = null;
+                try {
+                    userList = InitUser(userIdList);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
                 FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, groupList.get(viewHolder.getAdapterPosition()).getGroupId());
                 fragmentManager.beginTransaction().replace(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
@@ -102,6 +112,36 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
     @Override
     public int getItemCount() {
         return groupList.size();
+    }
+
+    public List<User> InitUser(List<User> userIdList) throws InterruptedException {
+        List<User> userList = new ArrayList<>();
+        for (User user : userIdList) {
+            Call<User> callCommunity = RetrofitClient.getCommunityService()
+                    .getUser(user.getUserId());
+            callCommunity.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        User result = response.body();
+                        userList.add(result);
+                        System.out.println(result.getUserName() + " " + result.getUserDistance());
+                    } else {
+                        Toast.makeText(mContext, "error = " + String.valueOf(response.code()),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Log.d("User Initialization", t.getMessage());
+                    Toast.makeText(mContext, "Initialization Fail", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        TimeUnit.MILLISECONDS.sleep(300);
+        System.out.println("list size: " + userList.size());
+        return userList;
     }
 
     public void deleteGroup(String token, int groupId, int pos) {

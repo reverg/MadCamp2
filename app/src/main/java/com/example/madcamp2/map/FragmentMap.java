@@ -1,19 +1,25 @@
-package com.example.madcamp2;
+package com.example.madcamp2.map;
 
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.madcamp2.R;
+import com.example.madcamp2.RetrofitClient;
+import com.example.madcamp2.auth.TokenManager;
+import com.example.madcamp2.community.DTO.User;
 import com.naver.maps.geometry.LatLng;
 
 import com.naver.maps.map.LocationTrackingMode;
@@ -24,6 +30,10 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.MapFragment;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     View v;
@@ -90,19 +100,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if (!isRunning) {
-                    //infoButton.setVisibility(View.VISIBLE);
-                    // startButton.setText("Stop");
-                    //stopButton.setEnabled(true);
                     isRunning = true;
                 }
-                //else {
-                    //infoButton.setVisibility(View.GONE);
-                    // startButton.setText("Start");
-                //    isRunning = false;
-                //    pathMarkers = new ArrayList<>();
-                    //infoButton.setText("Distance: 0m\nSpeed: 0km/h");
-
-                //}
             }
         });
 
@@ -114,11 +113,36 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     pathMarkers = new ArrayList<>();
                     distanceInfo.setText("Distance: 0m");
                     speedInfo.setText("Speed: 0km/h");
+                    String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
+                    sendData(token, 1);
                     totalDistance = 0;
                 }
             }
         });
         return v;
+    }
+
+    public void sendData(String token, double distance) {
+        Call<User> callCommunity = RetrofitClient.getMapService().sendRunningData(token, distance);
+        callCommunity.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "success = " + response.code(), Toast.LENGTH_LONG).show();
+                    User result = response.body();
+
+                } else {
+                    Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("Send Data", t.getMessage());
+                Toast.makeText(getActivity(), "Send Data Fail", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
