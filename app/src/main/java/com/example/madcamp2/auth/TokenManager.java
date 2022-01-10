@@ -2,6 +2,9 @@ package com.example.madcamp2.auth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.auth0.android.jwt.JWT;
 
 public class TokenManager {
     public static final String PREFERENCE_NAME = "jwt_token";
@@ -26,5 +29,10 @@ public class TokenManager {
         String resp = prefs.getString(key, "");
 
         return resp;
+    }
+
+    public static int getUserId(Context context, String token) {
+        JWT jwt = new JWT(token);
+        return jwt.getClaim("_id").asInt();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.madcamp2.community;
 
+import static android.view.View.VISIBLE;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,6 +52,7 @@ public class FragmentCommunity extends Fragment {
     private TextView fab_make_group_text;
     private TextView fab_join_group_text;
     boolean fabVisible = false;
+    private ConstraintLayout no_group;
 
     TextInputEditText makeGroupName, makeGroupInfo;
     TextView makeGroupSave, makeGroupCancel;
@@ -71,6 +75,8 @@ public class FragmentCommunity extends Fragment {
         fab_make_group_text = v.findViewById(R.id.fab_make_group_text);
         fab_join_group_text = v.findViewById(R.id.fab_join_group_text);
 
+        no_group = v.findViewById(R.id.layout_no_group);
+
         fab_make_group.setVisibility(View.GONE);
         fab_join_group.setVisibility(View.GONE);
         fab_make_group_text.setVisibility(View.GONE);
@@ -82,8 +88,8 @@ public class FragmentCommunity extends Fragment {
                 if (!fabVisible) {
                     fab_make_group.show();
                     fab_join_group.show();
-                    fab_make_group_text.setVisibility(View.VISIBLE);
-                    fab_join_group_text.setVisibility(View.VISIBLE);
+                    fab_make_group_text.setVisibility(VISIBLE);
+                    fab_join_group_text.setVisibility(VISIBLE);
                     fabVisible = true;
                 } else {
                     fab_make_group.hide();
@@ -204,12 +210,12 @@ public class FragmentCommunity extends Fragment {
                     ArrayList<Group> groupArrayList = response.body();
                     groupList = groupArrayList;
 
-                    if (groupList.size() > 0 ) {
-                        communityAdapter = new CommunityAdapter(getActivity(), groupArrayList);
-                        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        recyclerview.setAdapter(communityAdapter);
-                    } else {
+                    communityAdapter = new CommunityAdapter(getActivity(), groupArrayList, no_group);
+                    recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    recyclerview.setAdapter(communityAdapter);
 
+                    if (groupList.size() == 0) {
+                        no_group.setVisibility(VISIBLE);
                     }
 
                 } else {
@@ -237,7 +243,31 @@ public class FragmentCommunity extends Fragment {
                 if (response.isSuccessful()) {
                     Group result = response.body();
                     groupList.add(result);
+
+                    if (groupList.size() == 1) {
+                        no_group.setVisibility(View.GONE);
+                    }
+
                     communityAdapter.notifyItemInserted(pos);
+
+                    AlertDialog.Builder dgBuilder = new AlertDialog.Builder(getActivity());
+                    View successAlertView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_create_success, null, false);
+                    dgBuilder.setView(successAlertView);
+
+                    final AlertDialog successDialog = dgBuilder.create();
+                    successDialog.show();
+
+                    ImageView cancelBtn = successAlertView.findViewById(R.id.group_dialog_cancel);
+                    TextView tokenTxt = successAlertView.findViewById(R.id.group_token);
+
+                    tokenTxt.setText(result.getGroupCode());
+                    cancelBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            successDialog.dismiss();
+                        }
+                    });
+
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
                             Toast.LENGTH_LONG).show();
@@ -260,8 +290,12 @@ public class FragmentCommunity extends Fragment {
             public void onResponse(Call<Group> call, Response<Group> response) {
                 if (response.isSuccessful()) {
                     Group result = response.body();
-
                     groupList.add(result);
+
+                    if (groupList.size() == 1) {
+                        no_group.setVisibility(View.GONE);
+                    }
+
                     communityAdapter.notifyItemInserted(pos);
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),

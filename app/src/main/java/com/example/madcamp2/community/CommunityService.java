@@ -23,6 +23,9 @@ public interface CommunityService {
     // Todo
     Call<ResponseBody> deleteGroupFunc(@Header ("access-token") String token, @Path("groupId") int groupId);
 
+    @DELETE("/group/member")
+    Call<ResponseBody> deleteMemberFunc(@Header ("access-token") String token, @Path("groupId") int groupId);
+
     @GET("/group/list")
     Call<ArrayList<Group>> getAllGroupFunc(@Header ("access-token") String token);
 

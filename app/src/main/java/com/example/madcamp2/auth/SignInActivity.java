@@ -66,6 +66,11 @@ public class SignInActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        String token = TokenManager.getToken(getApplicationContext(), TokenManager.TOKEN_KEY);
+        if (token != "") {
+            authenticate(token);
+        }
     }
 
     public void signIn() {
@@ -107,8 +112,9 @@ public class SignInActivity extends Activity {
                 if (response.isSuccessful()) {
                     if (response.body()) {
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        finish();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()),

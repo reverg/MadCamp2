@@ -45,6 +45,8 @@ dependencies {
     //Rounded Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
+    implementation 'com.auth0.android:jwtdecode:2.0.1'
+
     //Navigation Component
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'

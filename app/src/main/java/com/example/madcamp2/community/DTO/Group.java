@@ -19,6 +19,8 @@ public class Group {
     private ArrayList<User> memberList;
     @SerializedName("createdAt")
     private String createdAt;
+    @SerializedName("groupCode")
+    private String groupCode;
 
     public Group(int groupId, String groupName, User groupOwner,
                  ArrayList<User> memberList, String createdAt) {
@@ -27,6 +29,14 @@ public class Group {
         this.groupOwner = groupOwner;
         this.memberList = memberList;
         this.createdAt = createdAt;
+    }
+
+    public String getGroupCode() {
+        return groupCode;
+    }
+
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
     }
 
     public String getGroupName() {

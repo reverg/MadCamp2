@@ -26,12 +26,10 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
 
     Context mContext;
     List<User> userList;
-    User owner;
 
-    public GroupInfoAdapter(Context mContext, List<User> mData, User owner) {
+    public GroupInfoAdapter(Context mContext, List<User> mData) {
         this.mContext = mContext;
         this.userList = mData;
-        this.owner = owner;
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
@@ -47,7 +45,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
             user_img = itemView.findViewById(R.id.user_img);
             user_name = itemView.findViewById(R.id.user_name);
             user_distance = itemView.findViewById(R.id.user_distance);
-            user_rank = itemView.findViewById(R.id.member_ranking);
+            user_rank = itemView.findViewById(R.id.user_ranking);
         }
     }
 
@@ -63,12 +61,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         User userItem = userList.get(position);
 
-        if (userItem.getUserName() != null) {
-            holder.user_name.setText(userItem.getUserName());
-        } else {
-            holder.user_name.setText("default user");
-        }
-
+        holder.user_name.setText(userItem.getDisplayName());
         holder.user_rank.setText(Integer.toString(position +1));
         holder.user_distance.setText(Integer.toString(userItem.getUserDistance()));
     }

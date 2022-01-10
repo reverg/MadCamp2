@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,10 +38,12 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
 
     Context mContext;
     ArrayList<Group> groupList;
+    ConstraintLayout no_group;
 
-    public CommunityAdapter(Context mContext, ArrayList<Group> mData) {
+    public CommunityAdapter(Context mContext, ArrayList<Group> mData, ConstraintLayout no_group) {
         this.mContext = mContext;
         this.groupList = mData;
+        this.no_group = no_group;
     }
 
     public static class CommunityViewHolder extends RecyclerView.ViewHolder {
@@ -71,7 +74,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                 FragmentManager fragmentManager = ((AppCompatActivity)mContext).getSupportFragmentManager();
                 List<User> userList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
                 User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
-                FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, owner);
+                FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, groupList.get(viewHolder.getAdapterPosition()).getGroupId());
                 fragmentManager.beginTransaction().replace(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }
         });
@@ -112,6 +115,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                         String result = response.body().string();
                         Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
                         groupList.remove(pos);
+
+                        if (groupList.size() == 0) {
+                            no_group.setVisibility(View.VISIBLE);
+                        }
+
                         notifyItemRemoved(pos);
                     } catch (IOException e) {
                         e.printStackTrace();
