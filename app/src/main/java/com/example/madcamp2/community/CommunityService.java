@@ -25,4 +25,7 @@ public interface CommunityService {
 
     @GET("/group")
     Call<ArrayList<Group>> getAllGroupFunc();
+
+    @POST("/group/join")
+    Call<Group> joinGroupFunc(@Header("access-token") String token, @Field("name") String name, @Field("code") String code);
 }

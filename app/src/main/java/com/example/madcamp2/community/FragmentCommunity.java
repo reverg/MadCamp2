@@ -243,9 +243,8 @@ public class FragmentCommunity extends Fragment {
     }
 
     public void joinGroup(String token, int pos) {
-        // 수정 많이 필요
         Call<Group> callCommunity = RetrofitClient.getCommunityService()
-                .insertGroupFunc(token, makeGroupName.getText().toString());
+                .joinGroupFunc(token, joinGroupName.getText().toString(), joinGroupCode.getText().toString());
         callCommunity.enqueue(new Callback<Group>() {
             @Override
             public void onResponse(Call<Group> call, Response<Group> response) {
