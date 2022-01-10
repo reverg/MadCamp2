@@ -17,6 +17,7 @@ import com.example.madcamp2.MainActivity;
 import com.example.madcamp2.R;
 import com.example.madcamp2.RetrofitClient;
 import com.example.madcamp2.auth.DTO.SignInResult;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignInActivity extends Activity {
-    private Button signInBtn, signUpBtn;
+    private MaterialButton signInBtn, signUpBtn;
     private TextInputEditText signInUsername, signInPassword;
     private TextView signInAlert;
 
@@ -38,11 +39,11 @@ public class SignInActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        signInBtn = (Button) findViewById(R.id.sign_in_button);
+        signInBtn = (MaterialButton) findViewById(R.id.sign_in_button);
         signInUsername = (TextInputEditText) findViewById(R.id.sign_in_username);
         signInPassword = (TextInputEditText) findViewById(R.id.sign_in_password);
         signInAlert = (TextView) findViewById(R.id.sign_in_alert);
-        signUpBtn = (Button) findViewById(R.id.sign_up_button);
+        signUpBtn = (MaterialButton) findViewById(R.id.sign_up_button);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override

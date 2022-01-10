@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,8 +28,10 @@ import java.util.ArrayList;
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     View v;
     Button startButton;
-    Button infoButton;
+    //Button infoButton;
     boolean isRunning = false;
+    Button stopButton;
+    TextView distanceInfo, speedInfo;
 
     NaverMap currentNaverMap;
     LatLng currentPosition = null;
@@ -64,8 +67,11 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
 
         v = inflater.inflate(R.layout.fragment_map, container, false);
         startButton = v.findViewById(R.id.start_button);
-        infoButton = v.findViewById(R.id.info_button);
-        infoButton.setVisibility(View.GONE);
+        stopButton = v.findViewById(R.id.stop_button);
+        distanceInfo = v.findViewById(R.id.distance_info);
+        speedInfo = v.findViewById(R.id.speed_info);
+        //infoButton = v.findViewById(R.id.info_button);
+        //infoButton.setVisibility(View.GONE);
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -84,15 +90,30 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if (!isRunning) {
-                    infoButton.setVisibility(View.VISIBLE);
-                    startButton.setText("Stop");
+                    //infoButton.setVisibility(View.VISIBLE);
+                    // startButton.setText("Stop");
+                    //stopButton.setEnabled(true);
                     isRunning = true;
-                } else {
-                    infoButton.setVisibility(View.GONE);
-                    startButton.setText("Start");
+                }
+                //else {
+                    //infoButton.setVisibility(View.GONE);
+                    // startButton.setText("Start");
+                //    isRunning = false;
+                //    pathMarkers = new ArrayList<>();
+                    //infoButton.setText("Distance: 0m\nSpeed: 0km/h");
+
+                //}
+            }
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isRunning) {
                     isRunning = false;
                     pathMarkers = new ArrayList<>();
-                    infoButton.setText("Distance: 0m\nSpeed: 0km/h");
+                    distanceInfo.setText("Distance: 0m");
+                    speedInfo.setText("Speed: 0km/h");
                     totalDistance = 0;
                 }
             }
@@ -129,7 +150,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     if (pathMarkers.size() > 2) {
                         path.setCoords(pathMarkers);
                         path.setMap(naverMap);
-                        infoButton.setText("Distance: " + String.format("%.1f", totalDistance) + "m\nSpeed:" + String.format("%.1f", speed) + "km/h");
+                        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance));
+                        speedInfo.setText("Speed: " + String.format("%.1f", speed) + "km/h");
+                        //infoButton.setText("Distance: " + String.format("%.1f", totalDistance) + "m\nSpeed:" + String.format("%.1f", speed) + "km/h");
                     }
                 }
             }

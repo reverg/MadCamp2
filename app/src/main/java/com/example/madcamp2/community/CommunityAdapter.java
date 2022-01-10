@@ -1,5 +1,6 @@
 package com.example.madcamp2.community;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madcamp2.R;
@@ -20,6 +22,7 @@ import com.example.madcamp2.RetrofitClient;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.DTO.Group;
 import com.example.madcamp2.community.DTO.User;
+import com.google.android.material.card.MaterialCardView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,17 +44,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
     }
 
     public static class CommunityViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout community_group;
-        private ImageView group_img;
+        private MaterialCardView community_group;
+        //private ImageView group_img;
         private TextView group_name;
         private ImageView group_delete;
 
         public CommunityViewHolder(@NonNull View itemView) {
             super(itemView);
             community_group = itemView.findViewById(R.id.community_group_item);
-            group_img = itemView.findViewById(R.id.group_img);
+            // group_img = itemView.findViewById(R.id.group_img);
             group_name = itemView.findViewById(R.id.group_name);
-            group_delete = itemView.findViewById(R.id.group_delete);
+            // group_delete = itemView.findViewById(R.id.group_delete);
             };
         }
     @NonNull
@@ -69,14 +72,16 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                 fragmentManager.beginTransaction().add(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }
         });
-        viewHolder.group_delete.setOnClickListener(new View.OnClickListener() {
+
+        viewHolder.community_group.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 String token = TokenManager.getToken(mContext, TokenManager.TOKEN_KEY);
-                int groupId = groupList.get(viewHolder.getAdapterPosition()).getGroupId();
-                deleteGroup(token, groupId, viewHolder.getAdapterPosition());
+                deleteGroup(token, groupList.get(viewHolder.getAdapterPosition()).getGroupId(), viewHolder.getAdapterPosition());
+                return false;
             }
         });
+
         return viewHolder;
     }
 
@@ -84,7 +89,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
     public void onBindViewHolder(@NonNull CommunityViewHolder holder, int position) {
         Group groupItem = groupList.get(position);
         holder.group_name.setText(groupItem.getGroupName());
-        holder.group_img.setImageResource(R.mipmap.ic_launcher_round);
+        // holder.group_img.setImageResource(R.mipmap.ic_launcher_round);
     }
 
     @Override
@@ -94,7 +99,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
 
     public void deleteGroup(String token, int groupId, int pos) {
         Call<ResponseBody> callCommunity = RetrofitClient.getCommunityService()
-            .deleteGroupFunc(token, groupId);
+                .deleteGroupFunc(token, groupId);
         callCommunity.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -108,7 +113,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(mContext, "error = " + String.valueOf(response.code()),
+                    Toast.makeText(mContext, "AUAUTHORIZED",
                             Toast.LENGTH_LONG).show();
                 }
             }

@@ -8,5 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_purple">#896bff</color>
-    <color name="light_grey">#dbdbdb</color>
+    <color name="light_grey">#bdbdbd</color>
+    <color name="pastel_blue">#c1d3fe</color>
+    <color name="dark_blue">#abc4ff</color>
+    <color name="baby_blue">#ccdbfd</color>
+    <color name="lavender_blue">#d7e3fc</color>
+    <color name="alice_blue">#edf2fb</color>
 </resources>
