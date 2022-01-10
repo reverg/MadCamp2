@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="2dp">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:id="@+id/fragment_community"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,10 +24,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/fab_join_group"
+        app:borderWidth="0dp"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#565656"
+        android:backgroundTint="@color/baby_blue"
         android:src="@drawable/join_group"
         app:tint="@android:color/white" />
 
@@ -50,11 +51,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/fab_main"
         android:layout_alignParentRight="true"
+        app:borderWidth="0dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#565656"
-        android:src="@drawable/join_group"
-        app:tint="@android:color/white" />
+        android:backgroundTint="@color/pastel_blue"
+        android:src="@drawable/ic_baseline_group_add_24"
+        app:tint="@android:color/white"
+        app:maxImageSize="38dp"/>
 
     <TextView
         android:id="@+id/fab_join_group_text"
@@ -72,12 +75,13 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_main"
         android:layout_width="216dp"
+        app:borderWidth="0dp"
         android:layout_height="145dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#333333"
+        android:backgroundTint="@color/dark_blue"
         android:src="@drawable/plus"
         app:tint="@android:color/white" />
 </RelativeLayout>

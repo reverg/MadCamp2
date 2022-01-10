@@ -78,7 +78,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="260dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginLeft="-25dp"
         android:background="@drawable/signin" />

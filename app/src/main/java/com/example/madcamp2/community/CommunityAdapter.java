@@ -78,7 +78,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
             public boolean onLongClick(View view) {
                 String token = TokenManager.getToken(mContext, TokenManager.TOKEN_KEY);
                 deleteGroup(token, groupList.get(viewHolder.getAdapterPosition()).getGroupId(), viewHolder.getAdapterPosition());
-                return false;
+                return true;
             }
         });
 
@@ -113,7 +113,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(mContext, "AUAUTHORIZED",
+                    Toast.makeText(mContext, "ANAUTHORIZED!",
                             Toast.LENGTH_LONG).show();
                 }
             }

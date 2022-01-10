@@ -81,8 +81,8 @@ public class SignInActivity extends Activity {
                         TokenManager.setToken(getApplicationContext(), TokenManager.TOKEN_KEY, accessToken);
 
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()),
                             Toast.LENGTH_LONG).show();

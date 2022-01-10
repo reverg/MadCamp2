@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout.Tab communityTab;
     FragmentMap fragmentMap;
     FragmentCommunity fragmentCommunity;
+
+    private DrawerLayout drawerLayout;
     NavigationView navigationView;
 
     @Override
@@ -85,6 +89,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        navigationView = findViewById(R.id.navigation_view);
+        drawerLayout = findViewById(R.id.drawerLayout);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item.getItemId();
+
+                if (id == R.id.nav_logout) {
+                    TokenManager.setToken(getApplicationContext(), TokenManager.TOKEN_KEY, "");
+
+                    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                return true;
             }
         });
     }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madcamp2.R;
 import com.example.madcamp2.community.DTO.User;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout group_info;
+        private MaterialCardView group_info;
         private ImageView user_img;
         private TextView user_name;
         private TextView user_distance;
@@ -57,9 +58,14 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         User userItem = userList.get(position);
-        holder.user_name.setText(userItem.getUserName());
+
+        if (userItem.getUserName() != null) {
+            holder.user_name.setText(userItem.getUserName());
+        } else {
+            holder.user_name.setText("default user");
+        }
+
         holder.user_distance.setText(Integer.toString(userItem.getUserDistance()));
-        holder.user_img.setImageResource(R.mipmap.ic_launcher_round);
     }
 
     @Override
