@@ -11,6 +11,8 @@ public class Group {
     private int groupId;
     @SerializedName("name")
     private String groupName;
+    @SerializedName("info")
+    private String groupInfo = "";
     @SerializedName("owner")
     private User groupOwner;
     @SerializedName("member")
@@ -69,5 +71,9 @@ public class Group {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getGroupInfo() {
+        return groupInfo;
     }
 }

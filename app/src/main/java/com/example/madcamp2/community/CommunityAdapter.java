@@ -47,6 +47,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
         private MaterialCardView community_group;
         //private ImageView group_img;
         private TextView group_name;
+        private TextView group_info;
         private ImageView group_delete;
 
         public CommunityViewHolder(@NonNull View itemView) {
@@ -54,6 +55,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
             community_group = itemView.findViewById(R.id.community_group_item);
             // group_img = itemView.findViewById(R.id.group_img);
             group_name = itemView.findViewById(R.id.group_name);
+            group_info = itemView.findViewById(R.id.group_info);
             // group_delete = itemView.findViewById(R.id.group_delete);
             };
         }
@@ -70,7 +72,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                 List<User> userList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
                 User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
                 FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, owner);
-                fragmentManager.beginTransaction().add(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().replace(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }
         });
 
@@ -90,6 +92,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
     public void onBindViewHolder(@NonNull CommunityViewHolder holder, int position) {
         Group groupItem = groupList.get(position);
         holder.group_name.setText(groupItem.getGroupName());
+        holder.group_info.setText(groupItem.getGroupInfo());
         // holder.group_img.setImageResource(R.mipmap.ic_launcher_round);
     }
 

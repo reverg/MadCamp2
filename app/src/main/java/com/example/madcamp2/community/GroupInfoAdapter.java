@@ -37,12 +37,14 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
         private MaterialCardView group_info;
         private ImageView user_img;
+        private TextView user_ranking;
         private TextView user_name;
         private TextView user_distance;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
             group_info = itemView.findViewById(R.id.group_info_item);
+            user_ranking = itemView.findViewById(R.id.user_ranking);
             user_img = itemView.findViewById(R.id.user_img);
             user_name = itemView.findViewById(R.id.user_name);
             user_distance = itemView.findViewById(R.id.user_distance);
@@ -66,7 +68,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
         } else {
             holder.user_name.setText("default user");
         }
-
+        holder.user_ranking.setText(Integer.toString(position+1));
         holder.user_distance.setText(Integer.toString(userItem.getUserDistance()));
     }
 

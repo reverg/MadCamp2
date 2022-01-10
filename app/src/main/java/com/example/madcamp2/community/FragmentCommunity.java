@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +50,9 @@ public class FragmentCommunity extends Fragment {
     private TextView fab_join_group_text;
     boolean fabVisible = false;
 
-    TextInputEditText makeGroupName;
+    TextInputEditText makeGroupName, makeGroupInfo;
     TextView makeGroupSave, makeGroupCancel;
+
     TextInputEditText joinGroupName, joinGroupCode;
     TextView joinGroupSave, joinGroupCancel;
 
@@ -110,13 +112,17 @@ public class FragmentCommunity extends Fragment {
                 final AlertDialog dialog = builder.create();
 
                 makeGroupName = (TextInputEditText) alertView.findViewById(R.id.make_group_name);
+                makeGroupInfo = (TextInputEditText) alertView.findViewById(R.id.make_group_info);
                 makeGroupSave = (TextView) alertView.findViewById(R.id.make_group_save);
                 makeGroupCancel = (TextView) alertView.findViewById(R.id.make_group_cancel);
 
                 makeGroupSave.setOnClickListener(view -> {
                     // 저장버튼 클릭
                     if (TextUtils.isEmpty(makeGroupName.getText().toString())) {
-                        Toast.makeText(getActivity(), "Username / Password Required",
+                        Toast.makeText(getActivity(), "Group Name Required",
+                                Toast.LENGTH_LONG).show();
+                    } else if (TextUtils.isEmpty(makeGroupName.getText().toString())) {
+                        Toast.makeText(getActivity(), "Group Info Required",
                                 Toast.LENGTH_LONG).show();
                     } else {
                         String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
@@ -157,7 +163,7 @@ public class FragmentCommunity extends Fragment {
                 joinGroupSave.setOnClickListener(view -> {
                     // 저장버튼 클릭
                     if (TextUtils.isEmpty(joinGroupName.getText().toString())) {
-                        Toast.makeText(getActivity(), "Username / Password Required",
+                        Toast.makeText(getActivity(), "Group Name Required",
                                 Toast.LENGTH_LONG).show();
                     } else if (TextUtils.isEmpty(joinGroupCode.getText().toString())) {
                         Toast.makeText(getActivity(), "Group Code Required",
@@ -221,7 +227,7 @@ public class FragmentCommunity extends Fragment {
 
     public void makeGroup(String token, int pos) {
         Call<Group> callCommunity = RetrofitClient.getCommunityService()
-                .insertGroupFunc(token, makeGroupName.getText().toString());
+                .insertGroupFunc(token, makeGroupName.getText().toString(), makeGroupInfo.getText().toString());
         callCommunity.enqueue(new Callback<Group>() {
             @Override
             public void onResponse(Call<Group> call, Response<Group> response) {
@@ -251,9 +257,9 @@ public class FragmentCommunity extends Fragment {
             public void onResponse(Call<Group> call, Response<Group> response) {
                 if (response.isSuccessful()) {
                     Group result = response.body();
-                    // groupList.add(result);
-                    groupList.set(pos, result);
-                    communityAdapter.notifyDataSetChanged();
+
+                    groupList.add(result);
+                    communityAdapter.notifyItemInserted(pos);
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
                             Toast.LENGTH_LONG).show();

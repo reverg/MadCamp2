@@ -17,7 +17,7 @@ import retrofit2.http.Path;
 public interface CommunityService {
     @FormUrlEncoded
     @POST("/group")
-    Call<Group> insertGroupFunc(@Header ("access-token") String token, @Field("name") String name);
+    Call<Group> insertGroupFunc(@Header ("access-token") String token, @Field("name") String name, @Field("info") String info);
 
     @DELETE("/group/{groupId}")
     // Todo
