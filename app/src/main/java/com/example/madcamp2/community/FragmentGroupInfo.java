@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,23 +43,39 @@ public class FragmentGroupInfo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+            v = inflater.inflate(R.layout.fragment_group_info, container, false);
+            recyclerview = v.findViewById(R.id.recycler_view);
+
+            groupInfoAdapter = new GroupInfoAdapter(getActivity(), userList, owner);
+            recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerview.setAdapter(groupInfoAdapter);
+
+            userName = v.findViewById(R.id.my_name);
         v = inflater.inflate(R.layout.fragment_group_info, container, false);
         recyclerview = v.findViewById(R.id.recycler_view);
         clearButton = v.findViewById(R.id.clear_button);
         userName = v.findViewById(R.id.my_name);
 
-        if (owner.getUserName() != null) {
-            userName.setText(owner.getUserName());
-        }
+            if (owner.getUserName() != null) {
+                userName.setText(owner.getUserName());
+            }
 
-        owner_ranking = v.findViewById(R.id.my_ranking);
+            owner_ranking = v.findViewById(R.id.my_ranking);
 
-        int myRank = userList.indexOf(owner);
+            int myRank = -1;
+            String newRank = "No. ";
+
         owner_ranking.setText("No." + Integer.toString(myRank));
 
-        groupInfoAdapter = new GroupInfoAdapter(getContext(), userList, owner);
-        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerview.setAdapter(groupInfoAdapter);
+            for (int i =0; i < userList.size(); i++) {
+                if (userList.get(i).getUserId() == owner.getUserId()) {
+                    myRank = i + 1;
+                }
+            }
+
+            newRank += Integer.toString(myRank);
+            owner_ranking.setText(newRank);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override

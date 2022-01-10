@@ -186,7 +186,6 @@ public class FragmentCommunity extends Fragment {
 
         String token = TokenManager.getToken(getContext(), TokenManager.TOKEN_KEY);
         getGroupList(token);
-
         return v;
     }
 
@@ -204,10 +203,14 @@ public class FragmentCommunity extends Fragment {
                 if (response.isSuccessful()) {
                     ArrayList<Group> groupArrayList = response.body();
                     groupList = groupArrayList;
-                    communityAdapter = new CommunityAdapter(getActivity(), groupArrayList);
 
-                    recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerview.setAdapter(communityAdapter);
+                    if (groupList.size() > 0 ) {
+                        communityAdapter = new CommunityAdapter(getActivity(), groupArrayList);
+                        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        recyclerview.setAdapter(communityAdapter);
+                    } else {
+
+                    }
 
                 } else {
                     Toast.makeText(getContext(), "error = " + String.valueOf(response.code()),
