@@ -68,7 +68,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
             public void onClick(View v){
                 FragmentManager fragmentManager = ((AppCompatActivity)mContext).getSupportFragmentManager();
                 List<User> userList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
-                FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList);
+                User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
+                FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, owner);
                 fragmentManager.beginTransaction().add(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }
         });

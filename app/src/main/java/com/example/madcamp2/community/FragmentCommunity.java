@@ -178,7 +178,8 @@ public class FragmentCommunity extends Fragment {
             }
         });
 
-        getGroupList();
+        String token = TokenManager.getToken(getContext(), TokenManager.TOKEN_KEY);
+        getGroupList(token);
 
         return v;
     }
@@ -188,9 +189,9 @@ public class FragmentCommunity extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public ArrayList<Group> getGroupList() {
+    public ArrayList<Group> getGroupList(String token) {
         Call<ArrayList<Group>> callCommunity = RetrofitClient.getCommunityService()
-                .getAllGroupFunc();
+                .getAllGroupFunc(token);
         callCommunity.enqueue(new Callback<ArrayList<Group>>() {
             @Override
             public void onResponse(Call<ArrayList<Group>> call, Response<ArrayList<Group>> response) {
@@ -250,8 +251,9 @@ public class FragmentCommunity extends Fragment {
             public void onResponse(Call<Group> call, Response<Group> response) {
                 if (response.isSuccessful()) {
                     Group result = response.body();
-                    groupList.add(result);
-                    communityAdapter.notifyItemInserted(pos);
+                    // groupList.add(result);
+                    groupList.set(pos, result);
+                    communityAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
                             Toast.LENGTH_LONG).show();

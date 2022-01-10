@@ -24,10 +24,12 @@ public class FragmentGroupInfo extends Fragment {
     private List<User> userList;
     private RecyclerView recyclerview;
     private GroupInfoAdapter groupInfoAdapter;
+    private User owner;
+    private TextView userName, owner_ranking;
 
-
-    public FragmentGroupInfo(List<User> userList) {
+    public FragmentGroupInfo(List<User> userList, User owner) {
         this.userList = userList;
+        this.owner = owner;
         Log.d("FragmentGroupInfo", String.valueOf(userList.size()));
     }
 
@@ -37,7 +39,18 @@ public class FragmentGroupInfo extends Fragment {
         v = inflater.inflate(R.layout.fragment_group_info, container, false);
         recyclerview = v.findViewById(R.id.recycler_view);
 
-        groupInfoAdapter = new GroupInfoAdapter(getContext(), userList);
+        userName = v.findViewById(R.id.my_name);
+
+        if (owner.getUserName() != null) {
+            userName.setText(owner.getUserName());
+        }
+
+        owner_ranking = v.findViewById(R.id.my_ranking);
+
+        int myRank = userList.indexOf(owner);
+        owner_ranking.setText("No."+Integer.toString(myRank));
+
+        groupInfoAdapter = new GroupInfoAdapter(getContext(), userList, owner);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.setAdapter(groupInfoAdapter);
 

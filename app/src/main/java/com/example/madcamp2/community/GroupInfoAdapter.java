@@ -26,10 +26,12 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
 
     Context mContext;
     List<User> userList;
+    User owner;
 
-    public GroupInfoAdapter(Context mContext, List<User> mData) {
+    public GroupInfoAdapter(Context mContext, List<User> mData, User owner) {
         this.mContext = mContext;
         this.userList = mData;
+        this.owner = owner;
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
