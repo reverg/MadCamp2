@@ -38,6 +38,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.MapFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -126,8 +127,17 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             // 저장버튼 클릭
             String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
 
+            List<Double> lan = new ArrayList<Double>();
+            List<Double> lng = new ArrayList<Double>();
+
+            for (int i=0; i<pathMarkers.size(); i++) {
+                lan.add(pathMarkers.get(i).latitude);
+                lng.add(pathMarkers.get(i).longitude);
+            }
+
             comment = runComment.getText().toString();
-            insertRecord(token, pathMarkers, totalDistance, time, 100, comment);
+
+            insertRecord(token, lan, lng, totalDistance, time, maxSpeed, comment);
             dialog.dismiss();
         });
 
@@ -259,20 +269,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         currentNaverMap = naverMap;
     }
 
-    public void insertRecord(String token, ArrayList<LatLng> pathMarkers, double totalDistance,
+    public void insertRecord(String token, List<Double> lan, List<Double> lng, double totalDistance,
                              double time, double maxSpeed, String info) {
-
-        pathMarkers = new ArrayList<>();
-        pathMarkers.add(new LatLng(37.57152, 126.97714));
-        pathMarkers.add(new LatLng(37.56607, 126.98268));
-        pathMarkers.add(new LatLng(37.56445, 126.97707));
-        pathMarkers.add(new LatLng(37.55855, 126.97822));
 
         Gson gson = new Gson();
         String json = gson.toJson(pathMarkers);
 
         Call<Record> callRecord = RetrofitClient.getRecordService().insertRecord(token,
-                totalDistance, maxSpeed, time, json, info);
+                totalDistance, maxSpeed, time, lan, lng, info);
         callRecord.enqueue(new Callback<Record>() {
             @Override
             public void onResponse(Call<Record> call, Response<Record> response) {

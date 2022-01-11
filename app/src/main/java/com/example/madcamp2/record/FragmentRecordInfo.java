@@ -21,6 +21,9 @@ import com.example.madcamp2.RetrofitClient;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.DTO.User;
 import com.example.madcamp2.record.DTO.Record;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.MapFragment;
@@ -28,6 +31,9 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +52,16 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
     TextView speedInfo;
     TextView recordInfo;
     TextView recordDate;
+    TextView recordTime;
 
     double totalDistance = 0;
     double maxSpeed = 0;
     double totalTime = 0;
+
+    Gson gson = new Gson();
+
+    List<Double> lan;
+    List<Double> lng;
 
     String info;
     String date;
@@ -57,12 +69,17 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
     private PathOverlay path;
 
     public FragmentRecordInfo(Record record) {
-        this.pathMarkers = record.getPathMarkers();
         this.totalDistance = record.getTotalDistance();
         this.maxSpeed = record.getMaxSpeed();
         this.totalTime = record.getTotalTime();
         this.date = record.getRecordDate();
         this.info = record.getRecordInfo();
+        this.lan = record.getLan();
+        this.lng = record.getLng();
+
+        for (int i=0; i < lan.size(); i++ ){
+            pathMarkers.add(new LatLng(lan.get(i), lng.get(i)));
+        }
     }
 
     @Override
@@ -78,6 +95,7 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
         speedInfo = v.findViewById(R.id.record_speed);
         recordDate = v.findViewById(R.id.record_date);
         recordInfo = v.findViewById(R.id.record_info);
+        recordTime = v.findViewById(R.id.record_chronometer);
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -93,6 +111,7 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
         distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance) + "m");
         speedInfo.setText("Max Speed: " + String.format("%.1f", maxSpeed) + "km/h");
+        recordTime.setText("Time: " + String.format("%.1f", totalTime) + "s");
 
         recordDate.setText(date);
         recordInfo.setText(info);
@@ -102,15 +121,16 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        LatLng startLatLng = pathMarkers.get(0);
-        LatLng endLatLng = pathMarkers.get(pathMarkers.size() - 1);
-        LatLng middleLatLng = new LatLng((startLatLng.latitude + endLatLng.latitude) / 2, (startLatLng.longitude + endLatLng.longitude) / 2);
-        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(middleLatLng);
-        naverMap.moveCamera(cameraUpdate);
+        if (pathMarkers != null ) {
+            LatLng startLatLng = pathMarkers.get(0);
+            LatLng endLatLng = pathMarkers.get(pathMarkers.size() - 1);
+            LatLng middleLatLng = new LatLng((startLatLng.latitude + endLatLng.latitude) / 2, (startLatLng.longitude + endLatLng.longitude) / 2);
+            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(middleLatLng);
+            naverMap.moveCamera(cameraUpdate);
 
-        path.setCoords(pathMarkers);
-        path.setMap(naverMap);
-
+            path.setCoords(pathMarkers);
+            path.setMap(naverMap);
+        }
 
         currentNaverMap = naverMap;
     }

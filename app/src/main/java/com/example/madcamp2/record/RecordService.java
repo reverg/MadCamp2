@@ -3,6 +3,7 @@ package com.example.madcamp2.record;
 import com.example.madcamp2.record.DTO.Record;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -25,7 +26,8 @@ public interface RecordService {
                               @Field("distance") double distance,
                               @Field("maxSpeed") double maxSpeed,
                               @Field("time") double time,
-                              @Field("pathMarkers") String pathMarkers,
+                              @Field("lan") List<Double> lan,
+                              @Field("lng") List<Double> lng,
                               @Field("info") String info);
 
     @DELETE("/record/{recordId}")

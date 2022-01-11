@@ -1,13 +1,24 @@
 package com.example.madcamp2.record.DTO;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Record {
-    List<LatLng> pathMarkers;
+    //List<LatLng> pathMarkers;
+
+    //@SerializedName("pathMarkers")
+    //String path;
+
+    @SerializedName("lan")
+    List<Double> lan;
+
+    @SerializedName("lng")
+    List<Double> lng;
 
     String recordName;
     @SerializedName("info")
@@ -21,11 +32,11 @@ public class Record {
     double totalTime = 0;
 
     public Record() {
-        pathMarkers = new ArrayList<>();
-        pathMarkers.add(new LatLng(37.57152, 126.97714));
-        pathMarkers.add(new LatLng(37.56607, 126.98268));
-        pathMarkers.add(new LatLng(37.56445, 126.97707));
-        pathMarkers.add(new LatLng(37.55855, 126.97822));
+        //pathMarkers = new ArrayList<>();
+        //pathMarkers.add(new LatLng(37.57152, 126.97714));
+        //pathMarkers.add(new LatLng(37.56607, 126.98268));
+        //pathMarkers.add(new LatLng(37.56445, 126.97707));
+        //pathMarkers.add(new LatLng(37.55855, 126.97822));
 
         recordName = "abc";
         recordInfo = "def";
@@ -34,6 +45,32 @@ public class Record {
         maxSpeed = 10;
         totalTime = 10;
     }
+
+    public List<Double> getLan() {
+        return lan;
+    }
+
+    public void setLan(List<Double> lan) {
+        this.lan = lan;
+    }
+
+    public List<Double> getLng() {
+        return lng;
+    }
+
+    public void setLng(List<Double> lng) {
+        this.lng = lng;
+    }
+
+    /*
+    // public String getPath() {
+        return path;
+    }
+
+    //public void setPath(String path) {
+        this.path = path;
+                }
+                */
 
     /*
     public class jsLatLng {
@@ -50,9 +87,12 @@ public class Record {
     }
      */
 
-    public void setPathMarkers(ArrayList<LatLng> pathMarkers) {
+    /*
+    public void setPathMarkers(List<LatLng> pathMarkers) {
         this.pathMarkers = pathMarkers;
     }
+
+    */
 
     public void setRecordName(String recordName) {
         this.recordName = recordName;
@@ -90,9 +130,12 @@ public class Record {
         return recordInfo;
     }
 
+    /*
     public List<LatLng> getPathMarkers() {
         return pathMarkers;
     }
+
+     */
 
     public double getTotalDistance() {
         return totalDistance;
