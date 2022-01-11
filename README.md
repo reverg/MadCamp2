@@ -80,7 +80,7 @@
 
 ### Function 1: Show Group & Details
 
- 처음 Community Tab에 들어가면 RecyclerView로 서버에 저장된 유저가 속한 그룹 전체를 띄운다. 각각의 Group 창을 누르면 새로운 Fragment가 생성되면서 Group User 사이의 순위와 달린 거리를 확인할 수 있는 창이 생긴다. 내 순위는 상단에 표시되고, 하단에서 다른 User들이 얼마나 달렸는지 볼 수 있다.
+ 처음 Community Tab에 들어가면 RecyclerView로 서버에 저장된 유저가 속한 그룹 전체를 띄운다. 각각의 Group 창을 누르면 새로운 Fragment가 생성되면서 Group User 사이의 순위와 달린 거리를 확인할 수 있는 창이 생긴다. 내 순위는 상단에 표시되고, 하단에서 다른 User들이 얼마나 달렸는지 볼 수 있다. 자신이 만든 그룹은 LongClick을 통해 그룹을 삭제할 수 있다.
 
 ### Function 2: Make Group
 
