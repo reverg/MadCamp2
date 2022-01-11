@@ -1,4 +1,4 @@
-# CS496 Imersive Camp (Winter 2021)
+# CS496 Imersion Camp (Winter 2021)
 
 # Project #2: Server & DB Application
 
@@ -10,7 +10,7 @@
 
 ## Introduction
 
- 이 앱의 이름은 Let’s Run이다. 달린 경로를 지도 API를 이용해 구하고 관련 정보를 서버에 전송한다. 저장된 운동 기록은 서버에서 유저별로 받아올 수 있다. 커뮤니티 그룹을 만들고 가입하여 달린 거리와 순위를 공유할 수 있게 하였다.
+ 이 앱의 이름은 `Let’s Run`이다. 달린 경로를 지도 API를 이용해 구하고 관련 정보를 서버에 전송한다. 저장된 운동 기록은 서버에서 유저별로 받아올 수 있다. 커뮤니티 그룹을 만들고 가입하여 달린 거리와 순위를 공유할 수 있게 하였다.
 
  Android를 위한 application으로 제작되었으며, Backend는 node.js와 mongoDB를 mongoose로 연결하여 구성됐다. Frontend에서 Backend와 연결하기 위해 Retrofit2를 사용했다.
 
