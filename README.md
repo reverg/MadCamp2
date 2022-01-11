@@ -14,6 +14,21 @@
 
  Android를 위한 application으로 제작되었으며, Backend는 node.js와 mongoDB를 mongoose로 연결하여 구성됐다. Frontend에서 Backend와 연결하기 위해 Retrofit2를 사용했다.
 
+
+## Before Running
+
+ 서버 연결을 통한 Sign In과 Sign Up 기능을 제공한다. 이 User 정보를 바탕으로 Server와 상호작용하여 Record와 Community 관련 정보를 관리한다.
+
+### Sign In
+
+ Default로 나타나는 창에 Username과 Password를 입력하고 SIGN IN 버튼을 누르면 로그인 할 수 있다. 한 번 로그인하면 Log Out 하기 전까지 자동 Log In이 된다.
+ <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148927991-eae11a7e-8678-4d75-98ed-29da689cc6c6.jpg" width="30%" height="30%"></div>
+
+### Sign Up
+
+ Account가 없는 사람은 Sign Up을 먼저 해야 기능을 사용할 수 있다. Log In에 사용할 Username과 Password, 다른 사람들에게 보여줄 Display Name을 입력하고 Password Confirm을 거치면 Server에 User 정보가 저장되어 Sign In이 가능해진다.
+ <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148927940-f5243292-594d-443d-ba7c-af191c5b53be.jpg" width="30%" height="30%"></div>
+ 
 ## Tab 1: Running Tracker
 
 ### Features
