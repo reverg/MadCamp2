@@ -14,6 +14,20 @@
 
  Android를 위한 application으로 제작되었으며, Backend는 node.js와 mongoDB를 mongoose로 연결하여 구성됐다. Frontend에서 Backend와 연결하기 위해 Retrofit2를 사용했다.
 
+
+## Before Running
+
+ 서버 연결을 통한 Sign In과 Sign Up 기능을 제공한다. 이 User 정보를 바탕으로 Server와 상호작용하여 Record와 Community 관련 정보를 관리한다.
+
+### Sign In
+
+ Default로 나타나는 창에 Username과 Password를 입력하고 SIGN IN 버튼을 누르면 로그인 할 수 있다. 한 번 로그인하면 Log Out 하기 전까지 자동 Log In이 된다.
+
+### Sign Up
+
+ Account가 없는 사람은 Sign Up을 먼저 해야 기능을 사용할 수 있다. Log In에 사용할 Username과 Password, 다른 사람들에게 보여줄 Display Name을 입력하고 Password Confirm을 거치면 Server에 User 정보가 저장되어 Sign In이 가능해진다.
+ <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148927991-eae11a7e-8678-4d75-98ed-29da689cc6c6.jpg" width="30%" height="30%"> <img src = "https://user-images.githubusercontent.com/48681924/148927940-f5243292-594d-443d-ba7c-af191c5b53be.jpg" width="30%" height="30%"></div>
+ 
 ## Tab 1: Running Tracker
 
 ### Features
@@ -65,15 +79,19 @@
 
 ### Function 1: Show Group & Details
 
- 처음 Community Tab에 들어가면 RecyclerView로 서버에 저장된 유저가 속한 그룹 전체를 띄운다. 각각의 Group 창을 누르면 새로운 Fragment가 생성되면서 Group User 사이의 순위와 달린 거리를 확인할 수 있는 창이 생긴다. 내 순위는 상단에 표시되고, 하단에서 다른 User들이 얼마나 달렸는지 볼 수 있다.
+ 처음 Community Tab에 들어가면 RecyclerView로 서버에 저장된 유저가 속한 그룹 전체를 띄운다. 각각의 Group 창을 누르면 새로운 Fragment가 생성되면서 Group User 사이의 순위와 달린 거리를 확인할 수 있는 창이 생긴다. 내 순위는 상단에 표시되고, 하단에서 다른 User들이 얼마나 달렸는지 볼 수 있다. 자신이 만든 그룹은 LongClick을 통해 그룹을 삭제할 수 있다.
+ <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148929441-6f4e8922-58c7-49e1-b1a8-2e1aeac3e93c.jpg" width="30%" height="30%"> <img src = "https://user-images.githubusercontent.com/48681924/148929877-2fe27ee1-c4e9-4123-a159-5ec57eac0a2a.jpg" width="30%" height="30%"></div>
 
 ### Function 2: Make Group
 
  우측 하단의 FAB을 누르면 Make Group과 Join Group 버튼이 나온다. Make Group을 누르면 Group의 Name과 Information을 입력하는 새로운 Dialog가 나타난다. 정보를 입력해 새로운 Group을 생성하면 서버에 등록되고 난수로 Group Code를 생성해 사용자에게 반환해준다. 이 Code는 Join Group에 사용된다.
+  <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148929120-0d861b23-6d5a-4ec0-97b0-7934d1c3d4ca.jpg" width="30%" height="30%">
+ <img src = "https://user-images.githubusercontent.com/48681924/148929149-483e0296-f7b7-4e86-a821-c92092b9050a.jpg" width="30%" height="30%"></div>
 
 ### Function 3: Join Group
 
  Make Group 때와 비슷하게 새로운 Dialog에서 Group Name과 Code를 입력하면 새로운 그룹에 참가할 수 있다. 
+ <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148928997-a7c53802-6f31-466c-b16a-a200cf9b9deb.jpg" width="30%" height="30%"></div>
 
 ---
 
