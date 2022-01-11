@@ -80,8 +80,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         stopButton = v.findViewById(R.id.stop_button);
         distanceInfo = v.findViewById(R.id.distance_info);
         speedInfo = v.findViewById(R.id.speed_info);
-        //infoButton = v.findViewById(R.id.info_button);
-        //infoButton.setVisibility(View.GONE);
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -114,7 +112,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     distanceInfo.setText("Distance: 0m");
                     speedInfo.setText("Speed: 0km/h");
                     String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
-                    sendData(token, 1);
+                    sendData(token, totalDistance);
                     totalDistance = 0;
                 }
             }
@@ -129,7 +127,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), "success = " + response.code(), Toast.LENGTH_LONG).show();
-                    User result = response.body();
 
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
@@ -166,7 +163,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     pathMarkers.add(currentPosition);
                     double moveDistance = previousPosition.distanceTo(currentPosition);
                     totalDistance += moveDistance;
-                    double updateSec = ((currentMillis - previousMillis) / ((double) 1000.0));
+                    double updateSec = ((currentMillis - previousMillis) / 1000.0);
                     speed_2 = speed_1;
                     speed_1 = speed_0;
                     speed_0 = 3.6 * (moveDistance / updateSec);
@@ -174,9 +171,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     if (pathMarkers.size() > 2) {
                         path.setCoords(pathMarkers);
                         path.setMap(naverMap);
-                        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance));
+                        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance) + "m");
                         speedInfo.setText("Speed: " + String.format("%.1f", speed) + "km/h");
-                        //infoButton.setText("Distance: " + String.format("%.1f", totalDistance) + "m\nSpeed:" + String.format("%.1f", speed) + "km/h");
                     }
                 }
             }

@@ -38,7 +38,7 @@ import retrofit2.Response;
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder> {
 
     Context mContext;
-    ArrayList<Group> groupList = new ArrayList<>();
+    ArrayList<Group> groupList;
     ConstraintLayout no_group;
 
     public CommunityAdapter(Context mContext, ArrayList<Group> mData, ConstraintLayout no_group) {
@@ -75,17 +75,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
         viewHolder.community_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
                 List<User> userIdList = groupList.get(viewHolder.getAdapterPosition()).getMemberList();
-                List<User> userList = null;
-                try {
-                    userList = InitUser(userIdList);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
-                FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, groupList.get(viewHolder.getAdapterPosition()).getGroupId());
-                fragmentManager.beginTransaction().replace(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
+                InitUser(userIdList, viewHolder);
             }
         });
 
@@ -114,9 +105,16 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
         return groupList.size();
     }
 
-    public List<User> InitUser(List<User> userIdList) throws InterruptedException {
+    public void setFragment(List<User> userList, CommunityViewHolder viewHolder) {
+        FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, groupList.get(viewHolder.getAdapterPosition()).getGroupId());
+        FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
+    }
+
+    public List<User> InitUser(List<User> userIdList, CommunityViewHolder viewHolder) {
         List<User> userList = new ArrayList<>();
-        for (User user : userIdList) {
+        for (int i=0; i<userIdList.size(); i++) {
+            User user = userIdList.get(i);
             Call<User> callCommunity = RetrofitClient.getCommunityService()
                     .getUser(user.getUserId());
             callCommunity.enqueue(new Callback<User>() {
@@ -126,6 +124,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                         User result = response.body();
                         userList.add(result);
                         System.out.println(result.getUserName() + " " + result.getUserDistance());
+
+                        setFragment(userList, viewHolder);
                     } else {
                         Toast.makeText(mContext, "error = " + String.valueOf(response.code()),
                                 Toast.LENGTH_LONG).show();
@@ -139,8 +139,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                 }
             });
         }
-        TimeUnit.MILLISECONDS.sleep(300);
-        System.out.println("list size: " + userList.size());
         return userList;
     }
 
