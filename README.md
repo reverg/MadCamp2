@@ -5,6 +5,7 @@
 ## Team
 
 박예림 (https://github.com/rimrim990)
+
 송성민 (https://github.com/reverg)
 
 ## Introduction
