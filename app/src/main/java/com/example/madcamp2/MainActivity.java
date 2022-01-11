@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         navigationView = findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.nav_home);
         drawerLayout = findViewById(R.id.drawerLayout);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

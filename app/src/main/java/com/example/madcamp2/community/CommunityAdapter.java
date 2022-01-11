@@ -83,7 +83,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
+                // User owner = groupList.get(viewHolder.getAdapterPosition()).getGroupOwner();
                 FragmentGroupInfo groupInfo = new FragmentGroupInfo(userList, groupList.get(viewHolder.getAdapterPosition()).getGroupId());
                 fragmentManager.beginTransaction().replace(R.id.fragment_community, groupInfo).addToBackStack(null).commit();
             }

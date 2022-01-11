@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
+                android:textColor="@color/light_grey"
                 android:text="shr_product_description"
                 android:textAppearance="?attr/textAppearanceBody2" />
         </LinearLayout>

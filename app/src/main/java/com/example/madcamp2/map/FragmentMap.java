@@ -3,11 +3,13 @@ package com.example.madcamp2.map;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     boolean isRunning = false;
     Button stopButton;
     TextView distanceInfo, speedInfo;
+    Chronometer chronometer;
 
     NaverMap currentNaverMap;
     LatLng currentPosition = null;
@@ -82,6 +85,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         speedInfo = v.findViewById(R.id.speed_info);
         //infoButton = v.findViewById(R.id.info_button);
         //infoButton.setVisibility(View.GONE);
+        chronometer = v.findViewById(R.id.chronometer);
+        chronometer.setFormat("Time: %s");
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -101,6 +106,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onClick(View v) {
                 if (!isRunning) {
                     isRunning = true;
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.start();
+                    stopButton.setBackgroundColor(Color.parseColor("#cc8472"));
+                    startButton.setBackgroundColor(Color.parseColor("#dee8ff"));
+                    startButton.setTextColor(Color.parseColor("#ffffff"));
+                    startButton.setEnabled(false);
                 }
             }
         });
@@ -114,8 +125,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     distanceInfo.setText("Distance: 0m");
                     speedInfo.setText("Speed: 0km/h");
                     String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
-                    sendData(token, 1);
+                    // sendData(token, totalDistance);
+                    sendData(token, 10);
                     totalDistance = 0;
+                    startButton.setEnabled(true);
+                    startButton.setBackgroundColor(Color.parseColor("#79a1fc"));
+                    stopButton.setBackgroundColor(Color.parseColor("#eac9c1"));
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.stop();
                 }
             }
         });

@@ -37,17 +37,16 @@
             android:id="@+id/location_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="14dp"
             android:src="@drawable/ic_baseline_directions_run_24"
             app:layout_constraintBottom_toBottomOf="@+id/distance_info"
-            app:layout_constraintEnd_toStartOf="@+id/distance_info" />
+            app:layout_constraintEnd_toEndOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/distance_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:text="Distance: 0m"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Speed: 0km/h"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,22 +75,45 @@
             app:layout_constraintBottom_toBottomOf="@+id/speed_info"
             app:layout_constraintEnd_toStartOf="@+id/speed_info" />
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_baseline_access_time_24"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="#6b6b6b"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/speed_info" />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/speed_info">
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/start_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="false"
-                android:text="Start" />
+                android:text="Start"
+                android:backgroundTint="#79a1fc"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/stop_button"
