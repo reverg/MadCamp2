@@ -15,7 +15,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RecordService {
-    @GET("/record")
+    @GET("/record/list")
     Call<ArrayList<Record>> getAllRecordFunc(@Header("access-token") String token);
 
     @FormUrlEncoded
@@ -25,7 +25,8 @@ public interface RecordService {
                               @Field("distance") double distance,
                               @Field("maxSpeed") double maxSpeed,
                               @Field("time") double time,
-                              @Field("pathMarkers") String pathMarkers);
+                              @Field("pathMarkers") String pathMarkers,
+                              @Field("info") String info);
 
     @DELETE("/record/{recordId}")
         // Todo

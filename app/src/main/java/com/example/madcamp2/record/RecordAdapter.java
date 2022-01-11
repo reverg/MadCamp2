@@ -56,8 +56,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     @Override
     public void onBindViewHolder(@NonNull RecordViewHolder holder, int position) {
         Record recordItem = recordList.get(position);
-        holder.record_name.setText(recordItem.getRecordName());
-        holder.record_info.setText(recordItem.getRecordInfo());
+        holder.record_id.setText(recordItem.getRecordName());
+        holder.record_info.setText(String.format("%.1f", recordItem.getTotalDistance()) + "m / "+ recordItem.getTotalTime());
+        holder.record_date.setText(recordItem.getRecordDate());
     }
 
     @Override
@@ -67,14 +68,16 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     public static class RecordViewHolder extends RecyclerView.ViewHolder {
         private MaterialCardView record_group;
-        private TextView record_name;
+        private TextView record_id;
         private TextView record_info;
+        private TextView record_date;
 
         public RecordViewHolder(@NonNull View itemView) {
             super(itemView);
             record_group = itemView.findViewById(R.id.record_group_item);
-            record_name = itemView.findViewById(R.id.record_name);
+            record_id = itemView.findViewById(R.id.record_id);
             record_info = itemView.findViewById(R.id.record_info);
+            record_date = itemView.findViewById(R.id.record_date);
         }
     }
 }

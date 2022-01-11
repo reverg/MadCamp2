@@ -26,6 +26,7 @@ import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.DTO.User;
 import com.example.madcamp2.record.DTO.Record;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.naver.maps.geometry.LatLng;
 
@@ -62,6 +63,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     AlertDialog dialog;
 
     double totalDistance = 0;
+    double maxSpeed = 0;
     long currentMillis = System.currentTimeMillis();
     long previousMillis = currentMillis;
 
@@ -71,6 +73,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     private FusedLocationSource fusedLocationSource;
     private PathOverlay path;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+
+    TextInputEditText runComment;
+    String comment = "";
 
     public FragmentMap() {
     }
@@ -92,6 +97,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         speedInfo = v.findViewById(R.id.speed_info);
         chronometer = v.findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
+        runComment = v.findViewById(R.id.textLayout7);
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -118,7 +124,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         insertBtn.setOnClickListener(view -> {
             // 저장버튼 클릭
             String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
-            insertRecord(token, pathMarkers, totalDistance, time, 100);
+            comment = runComment.getText().toString();
+            insertRecord(token, pathMarkers, totalDistance, time, 100, comment);
             dialog.dismiss();
         });
 
@@ -132,8 +139,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onClick(View v) {
                 if (!isRunning) {
                     isRunning = true;
+
+                    pathMarkers = new ArrayList<>();
+                    distanceInfo.setText("Distance: 0m");
+                    speedInfo.setText("Speed: 0km/h");
+                    totalDistance = 0;
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
+
                     stopButton.setBackgroundColor(Color.parseColor("#cc8472"));
                     startButton.setBackgroundColor(Color.parseColor("#dee8ff"));
                     startButton.setTextColor(Color.parseColor("#ffffff"));
@@ -147,14 +160,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onClick(View view) {
                 if (isRunning) {
                     isRunning = false;
-                    pathMarkers = new ArrayList<>();
-                    distanceInfo.setText("Distance: 0m");
-                    speedInfo.setText("Speed: 0km/h");
+                    speedInfo.setText("Max Speed: " + String.format("%.1f", maxSpeed) + "km/h");
+
                     String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
-                    sendData(token, totalDistance);
                     totalDistance = 0;
 
-                    String [] parts = chronometer.getText().toString().split(":");
+                    String[] parts = chronometer.getText().toString().split(":");
 
                     int seconds = 0, minutes = 0, hours = 0;
                     if (parts.length == 2) {
@@ -166,7 +177,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                         hours = Integer.parseInt(parts[0]);
                     }
 
-                    time = seconds + (minutes*60) + (hours*3600);
+                    time = seconds + (minutes * 60) + (hours * 3600);
 
                     startButton.setEnabled(true);
                     startButton.setBackgroundColor(Color.parseColor("#79a1fc"));
@@ -228,6 +239,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     speed_1 = speed_0;
                     speed_0 = 3.6 * (moveDistance / updateSec);
                     double speed = (speed_2 + speed_1 + speed_0) / 3.0;
+                    if (speed > maxSpeed) {
+                        maxSpeed = speed;
+                    }
                     if (pathMarkers.size() > 2) {
                         path.setCoords(pathMarkers);
                         path.setMap(naverMap);
@@ -241,7 +255,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     }
 
     public void insertRecord(String token, ArrayList<LatLng> pathMarkers, double totalDistance,
-                                          double time, double maxSpeed) {
+                             double time, double maxSpeed, String info) {
 
         pathMarkers = new ArrayList<>();
         pathMarkers.add(new LatLng(37.57152, 126.97714));
@@ -253,7 +267,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         String json = gson.toJson(pathMarkers);
 
         Call<Record> callRecord = RetrofitClient.getRecordService().insertRecord(token,
-                totalDistance, maxSpeed, time, json);
+                totalDistance, maxSpeed, time, json, info);
         callRecord.enqueue(new Callback<Record>() {
             @Override
             public void onResponse(Call<Record> call, Response<Record> response) {

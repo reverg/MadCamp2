@@ -11,6 +11,7 @@ public class Record {
     String recordName;
     String recordInfo;
     String createdAt;
+
     double totalDistance = 0;
     double maxSpeed = 0;
     double totalTime = 0;
@@ -24,6 +25,7 @@ public class Record {
 
         recordName = "abc";
         recordInfo = "def";
+        createdAt = "2020-10-10";
         totalDistance = 100;
         maxSpeed = 10;
         totalTime = 10;
@@ -98,5 +100,9 @@ public class Record {
 
     public double getTotalTime() {
         return totalTime;
+    }
+
+    public String getRecordDate() {
+        return createdAt;
     }
 }

@@ -50,7 +50,6 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
     double totalTime = 0;
 
     private PathOverlay path;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
 
     public FragmentRecordInfo(Record record) {
         this.pathMarkers = record.getPathMarkers();
@@ -88,7 +87,10 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(pathMarkers.get(0));
+        LatLng startLatLng = pathMarkers.get(0);
+        LatLng endLatLng = pathMarkers.get(pathMarkers.size() - 1);
+        LatLng middleLatLng = new LatLng((startLatLng.latitude + endLatLng.latitude) / 2, (startLatLng.longitude + endLatLng.longitude) / 2);
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(middleLatLng);
         naverMap.moveCamera(cameraUpdate);
 
         path.setCoords(pathMarkers);
