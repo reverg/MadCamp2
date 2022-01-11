@@ -126,7 +126,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     speedInfo.setText("Speed: 0km/h");
                     String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
                     // sendData(token, totalDistance);
-                    sendData(token, 10);
+                    sendData(token, totalDistance);
                     totalDistance = 0;
                     startButton.setEnabled(true);
                     startButton.setBackgroundColor(Color.parseColor("#79a1fc"));
@@ -146,7 +146,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), "success = " + response.code(), Toast.LENGTH_LONG).show();
-                    User result = response.body();
 
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
@@ -183,7 +182,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     pathMarkers.add(currentPosition);
                     double moveDistance = previousPosition.distanceTo(currentPosition);
                     totalDistance += moveDistance;
-                    double updateSec = ((currentMillis - previousMillis) / ((double) 1000.0));
+                    double updateSec = ((currentMillis - previousMillis) / 1000.0);
                     speed_2 = speed_1;
                     speed_1 = speed_0;
                     speed_0 = 3.6 * (moveDistance / updateSec);
@@ -191,9 +190,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     if (pathMarkers.size() > 2) {
                         path.setCoords(pathMarkers);
                         path.setMap(naverMap);
-                        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance));
+                        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance) + "m");
                         speedInfo.setText("Speed: " + String.format("%.1f", speed) + "km/h");
-                        //infoButton.setText("Distance: " + String.format("%.1f", totalDistance) + "m\nSpeed:" + String.format("%.1f", speed) + "km/h");
                     }
                 }
             }

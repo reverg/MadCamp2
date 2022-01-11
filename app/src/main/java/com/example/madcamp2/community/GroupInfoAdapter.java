@@ -63,7 +63,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.Grou
 
         holder.user_name.setText(userItem.getDisplayName());
         holder.user_rank.setText(Integer.toString(position + 1));
-        holder.user_distance.setText(Double.toString(userItem.getUserDistance()));
+        holder.user_distance.setText(String.format("%.1f", userItem.getUserDistance()) + "m");
     }
 
     @Override
