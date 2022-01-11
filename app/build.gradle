@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.3'
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.auth0.android.jwtdecode:2.0.1'
 
     //Material Design
     implementation 'com.google.android.material:material:1.2.0-alpha02'

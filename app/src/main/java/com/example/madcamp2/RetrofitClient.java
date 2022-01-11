@@ -3,6 +3,7 @@ package com.example.madcamp2;
 import com.example.madcamp2.community.CommunityService;
 import com.example.madcamp2.auth.SignInService;
 import com.example.madcamp2.map.MapService;
+import com.example.madcamp2.record.RecordService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,6 +46,11 @@ public class RetrofitClient {
 
     public static MapService getMapService() {
         MapService service = getRetrofit().create(MapService.class);
+        return service;
+    }
+
+    public static RecordService getRecordService() {
+        RecordService service = getRetrofit().create(RecordService.class);
         return service;
     }
 }

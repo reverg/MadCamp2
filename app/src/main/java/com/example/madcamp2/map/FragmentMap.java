@@ -40,7 +40,6 @@ import retrofit2.Response;
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     View v;
     Button startButton;
-    //Button infoButton;
     boolean isRunning = false;
     Button stopButton;
     TextView distanceInfo, speedInfo;
@@ -83,8 +82,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         stopButton = v.findViewById(R.id.stop_button);
         distanceInfo = v.findViewById(R.id.distance_info);
         speedInfo = v.findViewById(R.id.speed_info);
-        //infoButton = v.findViewById(R.id.info_button);
-        //infoButton.setVisibility(View.GONE);
         chronometer = v.findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
 
@@ -125,9 +122,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     distanceInfo.setText("Distance: 0m");
                     speedInfo.setText("Speed: 0km/h");
                     String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
-                    // sendData(token, totalDistance);
                     sendData(token, totalDistance);
                     totalDistance = 0;
+
                     startButton.setEnabled(true);
                     startButton.setBackgroundColor(Color.parseColor("#79a1fc"));
                     stopButton.setBackgroundColor(Color.parseColor("#eac9c1"));
