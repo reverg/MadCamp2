@@ -30,6 +30,7 @@ import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +41,7 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
     NaverMap currentNaverMap;
 
-    ArrayList<LatLng> pathMarkers;
+    List<LatLng> pathMarkers;
     TextView distanceInfo;
     TextView speedInfo;
 
@@ -81,7 +82,6 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
         path = new PathOverlay();
         path.setColor(Color.BLUE);
-        pathMarkers = new ArrayList<>();
 
         return v;
     }

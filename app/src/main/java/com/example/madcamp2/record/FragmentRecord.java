@@ -64,9 +64,11 @@ public class FragmentRecord extends Fragment {
         recyclerview = v.findViewById(R.id.record_view);
 
         no_record = v.findViewById(R.id.layout_no_record);
+        recordList = new ArrayList<>();
 
         String token = TokenManager.getToken(getContext(), TokenManager.TOKEN_KEY);
         getRecordList(token);
+        System.out.println(recordList.size());
 
         return v;
     }
@@ -102,7 +104,12 @@ public class FragmentRecord extends Fragment {
             }
         });
         */
-        ArrayList<Record> recordArrayList = new ArrayList<>();
+        recordList.add(new Record());
+        recordList.add(new Record());
+        recordList.add(new Record());
+        recordAdapter = new RecordAdapter(getActivity(), recordList, no_record);
+        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerview.setAdapter(recordAdapter);
 
         return recordList;
     }

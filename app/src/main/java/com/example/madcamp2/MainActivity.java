@@ -12,6 +12,7 @@ import com.example.madcamp2.auth.SignInActivity;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.FragmentCommunity;
 import com.example.madcamp2.map.FragmentMap;
+import com.example.madcamp2.record.FragmentRecord;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -24,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     TabLayout.Tab mapTab;
+    TabLayout.Tab recordTab;
     TabLayout.Tab communityTab;
+
     FragmentMap fragmentMap;
+    FragmentRecord fragmentRecord;
     FragmentCommunity fragmentCommunity;
 
     private DrawerLayout drawerLayout;
@@ -39,14 +43,17 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 
         fragmentMap = new FragmentMap();
+        fragmentRecord = new FragmentRecord();
         fragmentCommunity = new FragmentCommunity();
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragmentMap).commit();
 
         mapTab = tabLayout.newTab().setText("Map");
+        recordTab = tabLayout.newTab().setText("Record");
         communityTab = tabLayout.newTab().setText("Community");
 
         tabLayout.addTab(mapTab);
+        tabLayout.addTab(recordTab);
         tabLayout.addTab(communityTab);
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#abc4ff"));
@@ -59,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selected = null;
                 if (position == 0)
                     selected = fragmentMap;
+                else if (position == 1)
+                    selected = fragmentRecord;
                 else
                     selected = fragmentCommunity;
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
