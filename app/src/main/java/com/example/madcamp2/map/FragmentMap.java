@@ -97,8 +97,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         distanceInfo = v.findViewById(R.id.distance_info);
         speedInfo = v.findViewById(R.id.speed_info);
         chronometer = v.findViewById(R.id.chronometer);
-        chronometer.setFormat("Time: %s");
-        runComment = (TextInputEditText) v.findViewById(R.id.record_comment);
+        chronometer.setFormat("%s");
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -119,6 +118,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
 
         dialog = builder.create();
 
+        runComment = (TextInputEditText) recordView.findViewById(R.id.record_comment);
         ImageView cancelBtn = recordView.findViewById(R.id.insert_cancel_btn);
         MaterialButton insertBtn = recordView.findViewById(R.id.insert_record_btn);
 
@@ -126,8 +126,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             // 저장버튼 클릭
             String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
 
-            if (runComment.getText().toString() != null)
-                comment = runComment.getText().toString();
+            comment = runComment.getText().toString();
             insertRecord(token, pathMarkers, totalDistance, time, 100, comment);
             dialog.dismiss();
         });
@@ -170,6 +169,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     totalDistance = 0;
 
                     String[] parts = chronometer.getText().toString().split(":");
+                    Gson gson = new Gson();
+                    Log.d("FragmentMap",gson.toJson(parts));
 
                     int seconds = 0, minutes = 0, hours = 0;
                     if (parts.length == 2) {

@@ -44,10 +44,15 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
     List<LatLng> pathMarkers;
     TextView distanceInfo;
     TextView speedInfo;
+    TextView recordInfo;
+    TextView recordDate;
 
     double totalDistance = 0;
     double maxSpeed = 0;
     double totalTime = 0;
+
+    String info;
+    String date;
 
     private PathOverlay path;
 
@@ -56,6 +61,8 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
         this.totalDistance = record.getTotalDistance();
         this.maxSpeed = record.getMaxSpeed();
         this.totalTime = record.getTotalTime();
+        this.date = record.getRecordDate();
+        this.info = record.getRecordInfo();
     }
 
     @Override
@@ -69,6 +76,8 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
         v = inflater.inflate(R.layout.fragment_record_info, container, false);
         distanceInfo = v.findViewById(R.id.record_distance);
         speedInfo = v.findViewById(R.id.record_speed);
+        recordDate = v.findViewById(R.id.record_date);
+        recordInfo = v.findViewById(R.id.record_info);
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -81,6 +90,12 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
         path = new PathOverlay();
         path.setColor(Color.BLUE);
+
+        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance) + "m");
+        speedInfo.setText("Max Speed: " + String.format("%.1f", maxSpeed) + "km/h");
+
+        recordDate.setText(date);
+        recordInfo.setText(info);
 
         return v;
     }
@@ -95,8 +110,7 @@ public class FragmentRecordInfo extends Fragment implements OnMapReadyCallback {
 
         path.setCoords(pathMarkers);
         path.setMap(naverMap);
-        distanceInfo.setText("Distance: " + String.format("%.1f", totalDistance) + "m");
-        speedInfo.setText("Max Speed: " + String.format("%.1f", maxSpeed) + "km/h");
+
 
         currentNaverMap = naverMap;
     }

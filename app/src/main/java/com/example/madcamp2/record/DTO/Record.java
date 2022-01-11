@@ -1,5 +1,6 @@
 package com.example.madcamp2.record.DTO;
 
+import com.google.gson.annotations.SerializedName;
 import com.naver.maps.geometry.LatLng;
 
 import java.util.ArrayList;
@@ -9,11 +10,14 @@ public class Record {
     List<LatLng> pathMarkers;
 
     String recordName;
+    @SerializedName("info")
     String recordInfo;
     String createdAt;
 
+    @SerializedName("distance")
     double totalDistance = 0;
     double maxSpeed = 0;
+    @SerializedName("time")
     double totalTime = 0;
 
     public Record() {
