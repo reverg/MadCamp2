@@ -4,8 +4,9 @@
 
 ## Team
 
-[박예림](https://github.com/rimrim990)
-[송성민](https://github.com/reverg)
+박예림 (https://github.com/rimrim990)
+
+송성민 (https://github.com/reverg)
 
 ## Introduction
 
@@ -29,6 +30,8 @@
 ### Function 2: Draw Path on Map
 
  Start button을 누르면 경로를 기록하기 시작한다. 실시간으로 받아오는 위치 좌표를 List에 넣어 지도에 파란색 경로를 그리게 하였다. Stop button을 누르면 위치 추적과 경로 그리기를 중지한다.
+ 
+ <div align=center> <img src = "https://user-images.githubusercontent.com/48681924/148922606-45aff1a8-eadd-4c46-9e06-21c56bfa68a5.jpg" width="30%" height="30%"></div>
 
 ### Function 3: Make Record
 
