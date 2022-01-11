@@ -1,6 +1,8 @@
 package com.example.madcamp2.map;
 
 import com.example.madcamp2.community.DTO.User;
+import com.example.madcamp2.record.DTO.Record;
+import com.naver.maps.geometry.LatLng;
 
 import java.util.ArrayList;
 
@@ -17,5 +19,6 @@ import retrofit2.http.Path;
 public interface MapService {
     @FormUrlEncoded
     @POST("/users/data")
-    Call<User> sendRunningData(@Header ("access-token") String token, @Field("distance") double distance);
+    Call<User> sendRunningData(@Header ("access-token") String token,
+                               @Field("distance") double distance);
 }

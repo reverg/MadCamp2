@@ -10,6 +10,7 @@ public class Record {
 
     String recordName;
     String recordInfo;
+    String createdAt;
     double totalDistance = 0;
     double maxSpeed = 0;
     double totalTime = 0;
@@ -26,6 +27,53 @@ public class Record {
         totalDistance = 100;
         maxSpeed = 10;
         totalTime = 10;
+    }
+
+    /*
+    public class jsLatLng {
+        double lat;
+        double lng;
+    }
+    public void setPathMarkers(ArrayList<jsLatLng> pathMarkers) {
+        ArrayList<LatLng> list = new ArrayList<LatLng>();
+        for (int i=0; i<pathMarkers.size(); i++) {
+            LatLng coord = new LatLng(pathMarkers.get(i).lat, pathMarkers.get(i).lng);
+            list.add(coord);
+        }
+        this.pathMarkers = list;
+    }
+     */
+
+    public void setPathMarkers(ArrayList<LatLng> pathMarkers) {
+        this.pathMarkers = pathMarkers;
+    }
+
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
+
+    public void setRecordInfo(String recordInfo) {
+        this.recordInfo = recordInfo;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setTotalDistance(double totalDistance) {
+        this.totalDistance = totalDistance;
+    }
+
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public void setTotalTime(double totalTime) {
+        this.totalTime = totalTime;
     }
 
     public String getRecordName() {

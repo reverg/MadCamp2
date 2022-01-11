@@ -28,6 +28,7 @@ import com.example.madcamp2.community.CommunityAdapter;
 import com.example.madcamp2.community.DTO.Group;
 import com.example.madcamp2.community.DTO.User;
 import com.example.madcamp2.record.DTO.Record;
+import com.google.gson.Gson;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
@@ -74,14 +75,15 @@ public class FragmentRecord extends Fragment {
     }
 
     public ArrayList<Record> getRecordList(String token) {
-        /*
-        Call<ArrayList<Record>> callCommunity = RetrofitClient.getRecordService().getAllRecordFunc(token);
-        callCommunity.enqueue(new Callback<ArrayList<Record>>() {
+        Call<ArrayList<Record>> callRecord = RetrofitClient.getRecordService().getAllRecordFunc(token);
+        callRecord.enqueue(new Callback<ArrayList<Record>>() {
             @Override
             public void onResponse(Call<ArrayList<Record>> call, Response<ArrayList<Record>> response) {
                 if (response.isSuccessful()) {
                     ArrayList<Record> recordArrayList = response.body();
-                    recordList = recordArrayList;
+
+                    Gson gson = new Gson();
+                    Log.d("FragmentRecord", gson.toJson(recordArrayList));
 
                     recordAdapter = new RecordAdapter(getActivity(), recordArrayList, no_record);
                     recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -103,13 +105,6 @@ public class FragmentRecord extends Fragment {
                 Toast.makeText(getContext(), "Response Fail", Toast.LENGTH_LONG).show();
             }
         });
-        */
-        recordList.add(new Record());
-        recordList.add(new Record());
-        recordList.add(new Record());
-        recordAdapter = new RecordAdapter(getActivity(), recordList, no_record);
-        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerview.setAdapter(recordAdapter);
 
         return recordList;
     }

@@ -1,5 +1,6 @@
 package com.example.madcamp2.map;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,9 @@ import com.example.madcamp2.R;
 import com.example.madcamp2.RetrofitClient;
 import com.example.madcamp2.auth.TokenManager;
 import com.example.madcamp2.community.DTO.User;
+import com.example.madcamp2.record.DTO.Record;
+import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 import com.naver.maps.geometry.LatLng;
 
 import com.naver.maps.map.LocationTrackingMode;
@@ -44,6 +49,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     Button stopButton;
     TextView distanceInfo, speedInfo;
     Chronometer chronometer;
+    double time;
 
     NaverMap currentNaverMap;
     LatLng currentPosition = null;
@@ -52,6 +58,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     double speed_2 = 0;
     double speed_1 = 0;
     double speed_0 = 0;
+
+    AlertDialog dialog;
 
     double totalDistance = 0;
     long currentMillis = System.currentTimeMillis();
@@ -98,6 +106,27 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         path.setColor(Color.BLUE);
         pathMarkers = new ArrayList<>();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View recordView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_insert_record, null, false);
+        builder.setView(recordView);
+
+        dialog = builder.create();
+
+        ImageView cancelBtn = recordView.findViewById(R.id.insert_cancel_btn);
+        MaterialButton insertBtn = recordView.findViewById(R.id.insert_record_btn);
+
+        insertBtn.setOnClickListener(view -> {
+            // 저장버튼 클릭
+            String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
+            insertRecord(token, pathMarkers, totalDistance, time, 100);
+            dialog.dismiss();
+        });
+
+        cancelBtn.setOnClickListener(view -> {
+            // 취소버튼 클릭
+            dialog.dismiss();
+        });
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +154,20 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     sendData(token, totalDistance);
                     totalDistance = 0;
 
+                    String [] parts = chronometer.getText().toString().split(":");
+
+                    int seconds = 0, minutes = 0, hours = 0;
+                    if (parts.length == 2) {
+                        seconds = Integer.parseInt(parts[1]);
+                        minutes = Integer.parseInt(parts[0]);
+                    } else if (parts.length == 2) {
+                        seconds = Integer.parseInt(parts[2]);
+                        minutes = Integer.parseInt(parts[1]);
+                        hours = Integer.parseInt(parts[0]);
+                    }
+
+                    time = seconds + (minutes*60) + (hours*3600);
+
                     startButton.setEnabled(true);
                     startButton.setBackgroundColor(Color.parseColor("#79a1fc"));
                     stopButton.setBackgroundColor(Color.parseColor("#eac9c1"));
@@ -137,12 +180,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     }
 
     public void sendData(String token, double distance) {
-        Call<User> callCommunity = RetrofitClient.getMapService().sendRunningData(token, distance);
+        Call<User> callCommunity = RetrofitClient.getMapService()
+                .sendRunningData(token, distance);
         callCommunity.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "success = " + response.code(), Toast.LENGTH_LONG).show();
+                    dialog.show();
 
                 } else {
                     Toast.makeText(getActivity(), "error = " + String.valueOf(response.code()),
@@ -194,5 +238,38 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             }
         });
         currentNaverMap = naverMap;
+    }
+
+    public void insertRecord(String token, ArrayList<LatLng> pathMarkers, double totalDistance,
+                                          double time, double maxSpeed) {
+
+        pathMarkers = new ArrayList<>();
+        pathMarkers.add(new LatLng(37.57152, 126.97714));
+        pathMarkers.add(new LatLng(37.56607, 126.98268));
+        pathMarkers.add(new LatLng(37.56445, 126.97707));
+        pathMarkers.add(new LatLng(37.55855, 126.97822));
+
+        Gson gson = new Gson();
+        String json = gson.toJson(pathMarkers);
+
+        Call<Record> callRecord = RetrofitClient.getRecordService().insertRecord(token,
+                totalDistance, maxSpeed, time, json);
+        callRecord.enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "success = " + response.code(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "error = " + String.valueOf(response.code()),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+                Log.d("FragmentRecord", t.getMessage());
+                Toast.makeText(getContext(), "Response Fail", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
