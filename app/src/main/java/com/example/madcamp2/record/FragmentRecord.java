@@ -89,7 +89,7 @@ public class FragmentRecord extends Fragment {
                     recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerview.setAdapter(recordAdapter);
 
-                    if (recordList.size() == 0) {
+                    if (recordArrayList.size() == 0) {
                         no_record.setVisibility(VISIBLE);
                     }
 

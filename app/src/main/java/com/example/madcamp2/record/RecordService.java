@@ -15,7 +15,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RecordService {
-    @GET("/record/list")
+    @GET("/record")
     Call<ArrayList<Record>> getAllRecordFunc(@Header("access-token") String token);
 
     @FormUrlEncoded

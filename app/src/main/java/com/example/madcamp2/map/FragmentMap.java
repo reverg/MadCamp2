@@ -60,6 +60,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     double speed_1 = 0;
     double speed_0 = 0;
 
+
     AlertDialog dialog;
 
     double totalDistance = 0;
@@ -97,7 +98,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         speedInfo = v.findViewById(R.id.speed_info);
         chronometer = v.findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
-        runComment = v.findViewById(R.id.textLayout7);
+        runComment = (TextInputEditText) v.findViewById(R.id.record_comment);
 
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -124,7 +125,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         insertBtn.setOnClickListener(view -> {
             // 저장버튼 클릭
             String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
-            comment = runComment.getText().toString();
+
+            if (runComment.getText().toString() != null)
+                comment = runComment.getText().toString();
             insertRecord(token, pathMarkers, totalDistance, time, 100, comment);
             dialog.dismiss();
         });
@@ -163,6 +166,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     speedInfo.setText("Max Speed: " + String.format("%.1f", maxSpeed) + "km/h");
 
                     String token = TokenManager.getToken(getActivity(), TokenManager.TOKEN_KEY);
+                    sendData(token, totalDistance);
                     totalDistance = 0;
 
                     String[] parts = chronometer.getText().toString().split(":");
