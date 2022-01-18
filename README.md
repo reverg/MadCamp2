@@ -1,4 +1,4 @@
-# CS496 Imersion Camp (Winter 2021)
+# CS496 Immersion Camp (Winter 2021)
 
 # Project #2: Server & DB Application
 
